@@ -15,48 +15,76 @@ class LoginUI(QDialog):
     def __init__(self):
         super(LoginUI,self).__init__()
         loadUi("./UI/login.ui",self)
-        self.list=['sefasahan35@gmail.com']
+        with open('json.json', 'r') as f:
+            self.users = json.load(f)
+            self.user_names=self.users["user_emails"]
+        # self.list=['sefasahan35@gmail.com','a']
         self.errorTextLogin.setText('')
         self.errorTextSignUp.setText('')
-
-        # This is example of changing screen
         self.loginButton.clicked.connect(self.log_in)
         self.signUpButton.clicked.connect(self.sign_up)
 
-
     def log_in(self):
-        self.email=self.emailInputLogin.text()
-        if self.email in self.list:
+        self.user_id=self.emailInputLogin.text()
+        if self.user_id in self.user_names:
             self.go_main_menu()
         else:
-            self.errorTextLogin.setText('Check your email adress or sign up please')
+            self.errorTextLogin.setText('Check your username or sign up please')
             
     def sign_up(self):
-        self.name=self.nameInputSignUp.text()
-        self.email=self.emailInputSignUp.text()
-        try:
-            v = validate_email(self.email)
-            self.email = v["email"] 
-            if self.email in self.list:
-                self.errorTextSignUp.setText('This mail is already exist')
-            else:
-                self.list.append(self.email)
-                self.go_main_menu()
-                
-        except EmailNotValidError as e:
-            self.errorTextSignUp.setText('Check email please, that is not a valid email')
-           
-            
+        self.user_id=self.nameInputSignUp.text()
+        if len(self.user_id)==0:
+            self.errorTextSignUp.setText('Please write your name')
+        else:        
+            self.email=self.emailInputSignUp.text()
+            try:
+                v = validate_email(self.email)
+                self.email = v["email"] 
+                if self.email in self.users_email:
+                    self.errorTextSignUp.setText('This username is already exist')
+                else:
+                    self.list.append(self.email)
+                    print(self.list)
+                    self.go_main_menu()
+                                    
+            except EmailNotValidError :
+                self.errorTextSignUp.setText('Check email please, that is not a valid email')
+                       
     def go_main_menu(self):
         main_menu = MainMenuUI()
         widget.addWidget(main_menu)
         widget.setCurrentIndex(widget.currentIndex()+1)
 
-
 class MainMenuUI(QDialog):
     def __init__(self):
         super(MainMenuUI,self).__init__()
         loadUi("./UI/mainMenu.ui",self)
+        self.error_reciepts_email_label.setText('')
+        self.error_project_label.setText('')
+        self.error_subject_label.setText('')
+        self.button_add_reciept.clicked.connect(self.add_reciept)
+        self.list=[]
+        
+    def add_reciept(self):
+        self.email=self.line_add_reciept.text()
+        try:
+            v = validate_email(self.email)
+            self.email = v["email"] 
+            if self.email in self.list:
+                self.error_reciepts_email_label.setText('This mail is already exist')
+            else:
+                self.list.append(self.email)
+                # print(self.list)
+                # self.go_main_menu()                
+        except EmailNotValidError:
+            self.error_reciepts_email_label.setText('Check email please, that is not a valid email')
+    
+
+        
+        
+        
+        
+        
 
 class PomodoroUI(QDialog):
     def __init__(self):
