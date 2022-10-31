@@ -12,13 +12,14 @@ from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
 
 class LoginUI(QDialog):
+    user_id=""
     def __init__(self):
         super(LoginUI,self).__init__()
         loadUi("./UI/login.ui",self)
         with open('json.json', 'r') as f:
             self.users = json.load(f)
-            self.user_names=self.users["user_emails"]
-        # self.list=['sefasahan35@gmail.com','a']
+            self.user_names=self.users["userNames"]
+            self.user_emails=self.users["userEmails"]
         self.errorTextLogin.setText('')
         self.errorTextSignUp.setText('')
         self.loginButton.clicked.connect(self.log_in)
@@ -26,6 +27,7 @@ class LoginUI(QDialog):
 
     def log_in(self):
         self.user_id=self.emailInputLogin.text()
+        LoginUI.user_id=self.user_id
         if self.user_id in self.user_names:
             self.go_main_menu()
         else:
@@ -33,18 +35,17 @@ class LoginUI(QDialog):
             
     def sign_up(self):
         self.user_id=self.nameInputSignUp.text()
+        LoginUI.user_id=self.user_id
         if len(self.user_id)==0:
             self.errorTextSignUp.setText('Please write your name')
         else:        
-            self.email=self.emailInputSignUp.text()
+            self.user_email=self.emailInputSignUp.text()
             try:
-                v = validate_email(self.email)
-                self.email = v["email"] 
-                if self.email in self.users_email:
+                v = validate_email(self.user_email)
+                self.user_email = v["email"] 
+                if self.user_email in self.users_email:
                     self.errorTextSignUp.setText('This username is already exist')
                 else:
-                    self.list.append(self.email)
-                    print(self.list)
                     self.go_main_menu()
                                     
             except EmailNotValidError :
@@ -59,6 +60,10 @@ class MainMenuUI(QDialog):
     def __init__(self):
         super(MainMenuUI,self).__init__()
         loadUi("./UI/mainMenu.ui",self)
+        self.user_id=LoginUI.user_id
+        with open('json.json', 'r') as f:
+            self.users = json.load(f)
+            self.user_dict=self.users["User"][self.user_id]
         self.error_reciepts_email_label.setText('')
         self.error_project_label.setText('')
         self.error_subject_label.setText('')
@@ -70,12 +75,12 @@ class MainMenuUI(QDialog):
         try:
             v = validate_email(self.email)
             self.email = v["email"] 
-            if self.email in self.list:
+            if self.email in self.user_dict['Recipents']:
                 self.error_reciepts_email_label.setText('This mail is already exist')
             else:
                 self.list.append(self.email)
-                # print(self.list)
-                # self.go_main_menu()                
+                self.error_reciepts_email_label.setText('')
+                              
         except EmailNotValidError:
             self.error_reciepts_email_label.setText('Check email please, that is not a valid email')
     
