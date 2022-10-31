@@ -20,11 +20,12 @@
                 "session_startTime": "9:00",
                 "session_endTime": "9:30",
                 "sessions_date": "30-10-2022",
-                "sessionStatus": "done",
                 "tasks": [
-                  "task1",
-                  "task2",
-                  "task3"
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
                 ]
               },
               "session2": {
@@ -32,11 +33,12 @@
                 "session_startTime": "10:00",
                 "session_endTime": "10:30",
                 "sessions_date": "30-10-2022",
-                "sessionStatus": "done",
                 "tasks": [
-                  "task1",
-                  "task2",
-                  "task3"
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
                 ]
               }
             },
@@ -46,11 +48,12 @@
                 "session_startTime": "10:00",
                 "session_endTime": "10:00",
                 "sessions_date": "30-10-2022",
-                "sessionStatus": "done",
                 "tasks": [
-                  "task1",
-                  "task2",
-                  "task3"
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
                 ]
               }
             }
@@ -62,11 +65,12 @@
                 "session_startTime": "10:00",
                 "session_endTime": "10:00",
                 "sessions_date": "30-10-2022",
-                "sessionStatus": "done",
                 "tasks": [
-                  "task1",
-                  "task2",
-                  "task3"
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
                 ]
               }
             }
@@ -80,11 +84,12 @@
                 "session_startTime": "10:00",
                 "session_endTime": "10:00",
                 "sessions_date": "30-10-2022",
-                "sessionStatus": "done",
                 "tasks": [
-                  "task1",
-                  "task2",
-                  "task3"
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
                 ]
               }
             }
@@ -98,11 +103,12 @@
                 "session_startTime": "10:00",
                 "session_endTime": "10:00",
                 "sessions_date": "30-10-2022",
-                "sessionStatus": "done",
                 "tasks": [
-                  "task1",
-                  "task2",
-                  "task3"
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
                 ]
               }
             }
