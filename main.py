@@ -106,9 +106,9 @@ class MainMenuUI(QDialog):
             
     def delete_reciept(self):
         content = self.deleteRecipientCombo.currentText()
-        print(content)
+        index = self.deleteRecipientCombo.findText(content)
         self.user_dict['Recipents'].remove(content)
-        self.deleteRecipientCombo.removeItem(self,content)
+        self.deleteRecipientCombo.removeItem(index)
         
         
         
