@@ -1,0 +1,120 @@
+{
+  "userEmails": [
+    "rima@outlook.com"
+  ],
+  "User": [
+    {
+      "userName": "rima",
+      "useremail": "rima@outlook.com",
+      "Recipents": [
+        "rima@outlook.com",
+        "friend1@gmail.com",
+        "friend2@gmail.com"
+      ],
+      "projects": {
+        "project1Math": {
+          "subject1 Addition": {
+            "task1: positive numbers": {
+              "session1": {
+                "session_number": 1,
+                "session_startTime": "9:00",
+                "session_endTime": "9:30",
+                "sessions_date": "30-10-2022",
+                "tasks": [
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
+                ]
+              },
+              "session2": {
+                "session_number": 2,
+                "session_startTime": "10:00",
+                "session_endTime": "10:30",
+                "sessions_date": "30-10-2022",
+                "tasks": [
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
+                ]
+              }
+            },
+            "task2 Substract numbers": {
+              "session1": {
+                "session_number": 1,
+                "session_startTime": "10:00",
+                "session_endTime": "10:00",
+                "sessions_date": "30-10-2022",
+                "tasks": [
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
+                ]
+              }
+            }
+          },
+          "subject2 Substraction": {
+            "task1": {
+              "session1": {
+                "session_number": 1,
+                "session_startTime": "10:00",
+                "session_endTime": "10:00",
+                "sessions_date": "30-10-2022",
+                "tasks": [
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "project2History": {
+          "subject1": {
+            "task1": {
+              "session1": {
+                "session_number": 1,
+                "session_startTime": "10:00",
+                "session_endTime": "10:00",
+                "sessions_date": "30-10-2022",
+                "tasks": [
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "project3Physics": {
+          "subject1": {
+            "task1": {
+              "session1": {
+                "session_number": 1,
+                "session_startTime": "10:00",
+                "session_endTime": "10:00",
+                "sessions_date": "30-10-2022",
+                "tasks": [
+                  {
+                    "task1": "done",
+                    "task2": "done",
+                    "task3": "done"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
