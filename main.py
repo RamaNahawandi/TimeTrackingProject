@@ -38,16 +38,26 @@ class LoginUI(QDialog):
         LoginUI.user_id=self.user_id
         if len(self.user_id)==0:
             self.errorTextSignUp.setText('Please write your name')
+        elif self.user_id in self.user_names:
+            self.errorTextSignUp.setText('This username is already exist')
+            
         else:        
             self.user_email=self.emailInputSignUp.text()
             try:
                 v = validate_email(self.user_email)
                 self.user_email = v["email"] 
-                if self.user_email in self.users_email:
+                if self.user_email in self.user_emails:
                     self.errorTextSignUp.setText('This username is already exist')
-                else:
-                    self.go_main_menu()
-                                    
+                else:                                
+                    with open("json.json", "r+") as jsonFile:
+                        data = json.load(jsonFile)   
+                        data["userEmails"].append(self.user_email)
+                        data["userNames"].append(self.user_id)
+                        data["User"][self.user_id]={}
+                        jsonFile.seek(0)  # rewind
+                        json.dump(data, jsonFile)
+                        jsonFile.truncate()                    
+                    self.go_main_menu()                                    
             except EmailNotValidError :
                 self.errorTextSignUp.setText('Check email please, that is not a valid email')
                        
@@ -71,6 +81,8 @@ class MainMenuUI(QDialog):
         self.list=[]
         
     def add_reciept(self):
+        if 'Recipents' not in self.user_dict.keys():
+            self.user_dict['Recipents']=[]            
         self.email=self.line_add_reciept.text()
         try:
             v = validate_email(self.email)
@@ -84,12 +96,7 @@ class MainMenuUI(QDialog):
         except EmailNotValidError:
             self.error_reciepts_email_label.setText('Check email please, that is not a valid email')
     
-
-        
-        
-        
-        
-        
+       
 
 class PomodoroUI(QDialog):
     def __init__(self):
