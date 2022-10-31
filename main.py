@@ -1,4 +1,5 @@
-from time import time
+import time
+import datetime
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
@@ -47,13 +48,15 @@ class LoginUI(QDialog):
                 v = validate_email(self.user_email)
                 self.user_email = v["email"] 
                 if self.user_email in self.user_emails:
-                    self.errorTextSignUp.setText('This username is already exist')
+                    self.errorTextSignUp.setText('This email is already exist')
                 else:                                
                     with open("json.json", "r+") as jsonFile:
                         data = json.load(jsonFile)   
                         data["userEmails"].append(self.user_email)
                         data["userNames"].append(self.user_id)
-                        data["User"][self.user_id]={}
+                        user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
+                        data["User"][self.user_id]=user_dict
+                        data["User"]
                         jsonFile.seek(0)  # rewind
                         json.dump(data, jsonFile)
                         jsonFile.truncate()                    
@@ -74,27 +77,47 @@ class MainMenuUI(QDialog):
         with open('json.json', 'r') as f:
             self.users = json.load(f)
             self.user_dict=self.users["User"][self.user_id]
-        self.error_reciepts_email_label.setText('')
-        self.error_project_label.setText('')
-        self.error_subject_label.setText('')
-        self.button_add_reciept.clicked.connect(self.add_reciept)
+        self.errorTextRecipientsEmailLabel.setText('')
+        self.errorTextProjectLabel.setText('')
+        self.errorTextSubjectLabel.setText('')
+        self.addRecipientButton.clicked.connect(self.add_reciept)
+        self.deleteRecipientButton.clicked.connect(self.delete_reciept)
         self.list=[]
-        
-    def add_reciept(self):
-        if 'Recipents' not in self.user_dict.keys():
-            self.user_dict['Recipents']=[]            
-        self.email=self.line_add_reciept.text()
+        self.combo_set()
+    
+    def combo_set(self):
+        for i in self.user_dict['Recipents']:
+            self.deleteRecipientCombo.addItem(i)
+                 
+    def add_reciept(self):         
+        self.email=self.addRecipientInput.text()
         try:
             v = validate_email(self.email)
             self.email = v["email"] 
             if self.email in self.user_dict['Recipents']:
-                self.error_reciepts_email_label.setText('This mail is already exist')
+                self.errorTextRecipientsEmailLabel.setText('This mail is already exist')
             else:
-                self.list.append(self.email)
-                self.error_reciepts_email_label.setText('')
-                              
+                self.user_dict['Recipents'].append(self.email)
+                self.errorTextRecipientsEmailLabel.setText('')
+                self.deleteRecipientCombo.addItem(self.email)
+                                          
         except EmailNotValidError:
-            self.error_reciepts_email_label.setText('Check email please, that is not a valid email')
+            self.errorTextRecipientsEmailLabel.setText('Check email please, that is not a valid email')
+            
+    def delete_reciept(self):
+        content = self.deleteRecipientCombo.currentText()
+        print(content)
+        self.user_dict['Recipents'].remove(content)
+        self.deleteRecipientCombo.removeItem(self,content)
+        
+        
+        
+        
+            
+    
+            
+            
+    
     
        
 
@@ -108,6 +131,10 @@ class ShortBreakUI(QDialog):
     def __init__(self):
         super(ShortBreakUI,self).__init__()
         loadUi("./UI/shortBreak.ui",self)
+   
+    
+    
+
 
 class LongBreakUI(QDialog):
     def __init__(self):

@@ -28,7 +28,15 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>801</width>
+     <height>605</height>
+    </rect>
+   </property>
    <property name="styleSheet">
     <string notr="true">#centralwidget{
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.767045 rgba(0, 0, 88, 255));
@@ -61,7 +69,7 @@ border-radius:10px;
        <x>6</x>
        <y>58</y>
        <width>373</width>
-       <height>143</height>
+       <height>144</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -88,7 +96,7 @@ border-radius:10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="line_add_project">
+          <widget class="QLineEdit" name="addProjectInput">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -116,7 +124,7 @@ border-radius:0px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="error_project_label">
+          <widget class="QLabel" name="errorTextProjectLabel">
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 0, 0);</string>
            </property>
@@ -141,7 +149,7 @@ border-radius:0px;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="button_add_project">
+            <widget class="QPushButton" name="addProjectButton">
              <property name="minimumSize">
               <size>
                <width>89</width>
@@ -225,7 +233,7 @@ border-radius:10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="combo_sellect_project_2">
+          <widget class="QComboBox" name="sellectProjectComboSubjectMenu">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -257,7 +265,7 @@ border-radius:0px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="line_add_subject">
+          <widget class="QLineEdit" name="addSubjectInput">
            <property name="sizeIncrement">
             <size>
              <width>0</width>
@@ -285,7 +293,7 @@ border-radius:0px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="error_subject_label">
+          <widget class="QLabel" name="errorTextSubjectLabel">
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 0, 0);</string>
            </property>
@@ -310,7 +318,7 @@ border-radius:0px;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="button_add_subject">
+            <widget class="QPushButton" name="addSubjectButton">
              <property name="minimumSize">
               <size>
                <width>89</width>
@@ -608,7 +616,7 @@ border-radius:10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="combo_history_sellect_project">
+          <widget class="QComboBox" name="combo_hisshowSummaryProjectCombotory_sellect_project">
            <property name="maximumSize">
             <size>
              <width>250</width>
@@ -642,7 +650,7 @@ border-radius:0px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="combo_history_sellect_subject">
+          <widget class="QComboBox" name="showSummarySubjectCombo">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -676,7 +684,7 @@ border-radius:0px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="combo_history_sellect_period">
+          <widget class="QComboBox" name="showSummaryPeriodCombo">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -710,7 +718,7 @@ border-radius:0px;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="button_show_summary">
+            <widget class="QPushButton" name="showSummaryButton">
              <property name="minimumSize">
               <size>
                <width>140</width>
@@ -783,19 +791,31 @@ border-radius:10px;</string>
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="label_total_time">
+            <widget class="QLabel" name="totalTrackedTimeTextLabel_2">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
               </font>
              </property>
              <property name="text">
-              <string>Total Tracked Time: 00:00</string>
+              <string>Total Tracked Time:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="button_send_email">
+            <widget class="QLabel" name="totalTrackedTimeTextLabel">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string> 00:00</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="sendEmailThisSummaryButton">
              <property name="minimumSize">
               <size>
                <width>100</width>
@@ -837,7 +857,7 @@ border-radius:10px;</string>
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="summary_table">
+         <widget class="QTableWidget" name="summaryTableValuesWidget">
           <property name="maximumSize">
            <size>
             <width>800</width>
@@ -1045,7 +1065,7 @@ border-radius:10px;</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="4,0,0" columnminimumwidth="2,6,1">
       <item row="2" column="1">
-       <widget class="QComboBox" name="combo_project_delete">
+       <widget class="QComboBox" name="projectDeleteCombo">
         <property name="font">
          <font>
           <pointsize>11</pointsize>
@@ -1067,12 +1087,12 @@ border-radius:0px;</string>
          </font>
         </property>
         <property name="text">
-         <string>Reciept's email</string>
+         <string>Recipients email</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QPushButton" name="button_delete_project">
+       <widget class="QPushButton" name="projectDeleteButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1117,7 +1137,7 @@ background-color: rgb(255, 0, 0);</string>
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QPushButton" name="button_delete_subject">
+       <widget class="QPushButton" name="subjectDeleteButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1148,10 +1168,10 @@ border-radius:10px;</string>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="combo_reciept_email_delete">
+       <widget class="QComboBox" name="deleteRecipientCombo">
         <property name="minimumSize">
          <size>
-          <width>150</width>
+          <width>140</width>
           <height>0</height>
          </size>
         </property>
@@ -1174,7 +1194,7 @@ border-radius:0px;</string>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QComboBox" name="combo_subject_delete">
+       <widget class="QComboBox" name="subjectDeleteCombo">
         <property name="font">
          <font>
           <pointsize>11</pointsize>
@@ -1188,7 +1208,7 @@ border-radius:0px;</string>
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QPushButton" name="button_delete_reciept">
+       <widget class="QPushButton" name="deleteRecipientButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -1259,7 +1279,7 @@ border-radius:10px;</string>
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>Reciepts Email</string>
+         <string>Recipients Email</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1269,7 +1289,7 @@ border-radius:10px;</string>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout" stretch="6,1">
         <item>
-         <widget class="QLineEdit" name="line_add_reciept">
+         <widget class="QLineEdit" name="addRecipientInput">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -1293,12 +1313,12 @@ background-color: rgb(255, 255, 255);</string>
            <string/>
           </property>
           <property name="placeholderText">
-           <string>Add Receipt Email</string>
+           <string>Add Recipients Email</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="button_add_reciept">
+         <widget class="QPushButton" name="addRecipientButton">
           <property name="minimumSize">
            <size>
             <width>78</width>
@@ -1336,7 +1356,7 @@ border-radius:10px;
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="error_reciepts_email_label">
+       <widget class="QLabel" name="errorTextRecipientsEmailLabel">
         <property name="styleSheet">
          <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
