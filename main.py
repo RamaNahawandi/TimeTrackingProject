@@ -8,6 +8,7 @@ import json
 from email_validator import validate_email, EmailNotValidError
 
 
+
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
@@ -82,13 +83,58 @@ class MainMenuUI(QDialog):
         self.errorTextSubjectLabel.setText('')
         self.addRecipientButton.clicked.connect(self.add_reciept)
         self.deleteRecipientButton.clicked.connect(self.delete_reciept)
+        self.projectDeleteButton.clicked.connect(self.delete_project)
+        self.button_start_pomodoro.clicked.connect(self.start_pomodoro)
+        self.sellectProjectComboDeleteSubject.currentIndexChanged.connect(self.show_subject)
+        self.combo_sellect_project.currentIndexChanged.connect(self.show_subject_pomodoro)
+        self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
+        self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
         self.list=[]
         self.combo_set()
+        
+        
+        
+    def show_subject_history(self):
+        content = self.showSummaryProjectCombo.currentText()
+        self.showSummarySubjectCombo.clear()
+        if content!="All":   
+            for i in self.user_dict["projects"][content].keys():
+                self.showSummarySubjectCombo.addItem(i)
+            self.showSummarySubjectCombo.addItem("All")
+        else:
+            self.showSummarySubjectCombo.addItem("All")
+
+            
+    
+    def show_subject_pomodoro(self):
+        content = self.combo_sellect_project.currentText()
+        self.combo_sellect_subject.clear()
+        for i in self.user_dict["projects"][content].keys():
+            self.combo_sellect_subject.addItem(i)
+        
+        
+    def show_subject(self):
+        content = self.sellectProjectComboDeleteSubject.currentText()
+        self.subjectDeleteCombo.clear()
+        for i in self.user_dict["projects"][content].keys():
+            self.subjectDeleteCombo.addItem(i)
     
     def combo_set(self):
         for i in self.user_dict['Recipents']:
             self.deleteRecipientCombo.addItem(i)
-                 
+            
+        for i in self.user_dict["projects"].keys():
+            self.projectDeleteCombo.addItem(i)
+            self.sellectProjectComboSubjectMenu.addItem(i)
+            self.sellectProjectComboDeleteSubject.addItem(i)
+            self.combo_sellect_project.addItem(i)
+            self.showSummaryProjectCombo.addItem(i)
+            
+        self.showSummaryProjectCombo.addItem("All")
+        self.showSummaryPeriodCombo.addItem("All")
+        self.showSummaryPeriodCombo.addItem("Today")
+        self.showSummaryPeriodCombo.addItem("This week")
+               
     def add_reciept(self):         
         self.email=self.addRecipientInput.text()
         try:
@@ -109,6 +155,29 @@ class MainMenuUI(QDialog):
         index = self.deleteRecipientCombo.findText(content)
         self.user_dict['Recipents'].remove(content)
         self.deleteRecipientCombo.removeItem(index)
+        
+    def delete_project(self):
+        content = self.projectDeleteCombo.currentText()
+        index = self.projectDeleteCombo.findText(content)
+        self.user_dict["projects"].pop(content)
+        self.projectDeleteCombo.removeItem(index)
+        self.sellectProjectComboSubjectMenu.removeItem(index)
+        self.sellectProjectComboDeleteSubject.removeItem(index)
+        
+    def delete_subject(self):
+        content1 = self.sellectProjectComboDeleteSubject.currentText()
+        content=self.subjectDeleteCombo.currentText()
+        index = self.subjectDeleteCombo.findText(content)
+        self.user_dict["projects"][content1].pop(content)
+        self.subjectDeleteCombo.removeItem(index)
+        
+    def start_pomodoro(self):
+        pass
+        
+        
+    
+        
+        
         
         
         

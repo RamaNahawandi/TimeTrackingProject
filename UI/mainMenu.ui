@@ -51,7 +51,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
       <x>404</x>
       <y>12</y>
       <width>387</width>
-      <height>307</height>
+      <height>313</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -68,11 +68,14 @@ border-radius:10px;
       <rect>
        <x>6</x>
        <y>58</y>
-       <width>373</width>
-       <height>144</height>
+       <width>367</width>
+       <height>139</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>3</number>
+      </property>
       <item>
        <widget class="QWidget" name="widget" native="true">
         <property name="styleSheet">
@@ -80,6 +83,15 @@ border-radius:10px;
 border-radius:10px;</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>1</number>
+         </property>
+         <property name="bottomMargin">
+          <number>1</number>
+         </property>
          <item>
           <widget class="QLabel" name="label_7">
            <property name="font">
@@ -105,7 +117,7 @@ border-radius:10px;</string>
            </property>
            <property name="font">
             <font>
-             <pointsize>10</pointsize>
+             <pointsize>9</pointsize>
             </font>
            </property>
            <property name="styleSheet">
@@ -129,7 +141,7 @@ border-radius:0px;</string>
             <string notr="true">color: rgb(255, 0, 0);</string>
            </property>
            <property name="text">
-            <string>TextLabel</string>
+            <string>Error Label</string>
            </property>
           </widget>
          </item>
@@ -210,7 +222,19 @@ border-radius:10px;</string>
          <string notr="true">background-color: rgb(85, 170, 255);
 border-radius:10px;</string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="4,3,3,2,3">
+         <property name="spacing">
+          <number>9</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
          <item>
           <widget class="QLabel" name="label_8">
            <property name="maximumSize">
@@ -243,7 +267,7 @@ border-radius:10px;</string>
            <property name="maximumSize">
             <size>
              <width>231</width>
-             <height>16777215</height>
+             <height>18</height>
             </size>
            </property>
            <property name="sizeIncrement">
@@ -254,7 +278,7 @@ border-radius:10px;</string>
            </property>
            <property name="font">
             <font>
-             <pointsize>11</pointsize>
+             <pointsize>9</pointsize>
              <kerning>true</kerning>
             </font>
            </property>
@@ -266,6 +290,18 @@ border-radius:0px;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="addSubjectInput">
+           <property name="minimumSize">
+            <size>
+             <width>145</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>165</width>
+             <height>18</height>
+            </size>
+           </property>
            <property name="sizeIncrement">
             <size>
              <width>0</width>
@@ -294,11 +330,23 @@ border-radius:0px;</string>
          </item>
          <item>
           <widget class="QLabel" name="errorTextSubjectLabel">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>17</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 0, 0);</string>
            </property>
            <property name="text">
-            <string>TextLabel</string>
+            <string>Error Label</string>
            </property>
           </widget>
          </item>
@@ -328,7 +376,7 @@ border-radius:0px;</string>
              <property name="maximumSize">
               <size>
                <width>200</width>
-               <height>35</height>
+               <height>20</height>
               </size>
              </property>
              <property name="font">
@@ -404,8 +452,8 @@ border-radius:10px;</string>
     <widget class="QWidget" name="verticalWidget_2" native="true">
      <property name="geometry">
       <rect>
-       <x>6</x>
-       <y>208</y>
+       <x>8</x>
+       <y>214</y>
        <width>371</width>
        <height>93</height>
       </rect>
@@ -415,6 +463,15 @@ border-radius:10px;</string>
 border-radius:10px;</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6" stretch="5,5,6">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,5">
         <item>
@@ -549,9 +606,9 @@ border-radius:10px;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>324</y>
+      <y>336</y>
       <width>779</width>
-      <height>271</height>
+      <height>259</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -566,10 +623,10 @@ border-radius:10px;
     <widget class="QWidget" name="horizontalLayoutWidget_5">
      <property name="geometry">
       <rect>
-       <x>8</x>
-       <y>7</y>
+       <x>4</x>
+       <y>4</y>
        <width>765</width>
-       <height>259</height>
+       <height>249</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="2,8">
@@ -616,7 +673,7 @@ border-radius:10px;</string>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="combo_hisshowSummaryProjectCombotory_sellect_project">
+          <widget class="QComboBox" name="showSummaryProjectCombo">
            <property name="maximumSize">
             <size>
              <width>250</width>
@@ -768,9 +825,15 @@ border-radius:10px;</string>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_10">
+       <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,8">
         <item>
          <widget class="QWidget" name="horizontalWidget_6" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>35</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(0, 245, 245);
 
@@ -816,6 +879,12 @@ border-radius:10px;</string>
            </item>
            <item>
             <widget class="QPushButton" name="sendEmailThisSummaryButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>100</width>
@@ -1028,7 +1097,7 @@ border-radius:10px;</string>
       <x>10</x>
       <y>10</y>
       <width>387</width>
-      <height>307</height>
+      <height>317</height>
      </rect>
     </property>
     <property name="font">
@@ -1053,9 +1122,9 @@ border-radius:10px;
      <property name="geometry">
       <rect>
        <x>6</x>
-       <y>160</y>
+       <y>158</y>
        <width>371</width>
-       <height>123</height>
+       <height>77</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1063,31 +1132,39 @@ border-radius:10px;
 background-color: rgb(85, 170, 255);
 border-radius:10px;</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" columnstretch="4,0,0" columnminimumwidth="2,6,1">
-      <item row="2" column="1">
-       <widget class="QComboBox" name="projectDeleteCombo">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0">
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="deleteRecipientCombo">
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>17</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="font">
          <font>
-          <pointsize>11</pointsize>
+          <pointsize>9</pointsize>
           <kerning>true</kerning>
          </font>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);
 border-radius:0px;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text">
-         <string>Recipients email</string>
         </property>
        </widget>
       </item>
@@ -1101,13 +1178,25 @@ border-radius:0px;</string>
         </property>
         <property name="minimumSize">
          <size>
-          <width>74</width>
-          <height>20</height>
+          <width>65</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
          <font>
-          <pointsize>11</pointsize>
+          <pointsize>9</pointsize>
          </font>
         </property>
         <property name="cursor">
@@ -1115,7 +1204,7 @@ border-radius:0px;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">
-border-radius:10px;
+border-radius:5px;
 background-color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
@@ -1127,7 +1216,7 @@ background-color: rgb(255, 0, 0);</string>
        <widget class="QLabel" name="label_3">
         <property name="font">
          <font>
-          <pointsize>10</pointsize>
+          <pointsize>9</pointsize>
           <kerning>true</kerning>
          </font>
         </property>
@@ -1136,39 +1225,8 @@ background-color: rgb(255, 0, 0);</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QPushButton" name="subjectDeleteButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>74</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
-        </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 0, 0);
-border-radius:10px;</string>
-        </property>
-        <property name="text">
-         <string>Delete</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="deleteRecipientCombo">
+      <item row="2" column="1">
+       <widget class="QComboBox" name="projectDeleteCombo">
         <property name="minimumSize">
          <size>
           <width>140</width>
@@ -1178,12 +1236,18 @@ border-radius:10px;</string>
         <property name="maximumSize">
          <size>
           <width>150</width>
-          <height>16777215</height>
+          <height>17</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
          <font>
-          <pointsize>11</pointsize>
+          <pointsize>9</pointsize>
           <kerning>true</kerning>
          </font>
         </property>
@@ -1193,17 +1257,16 @@ border-radius:0px;</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="subjectDeleteCombo">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
         <property name="font">
          <font>
-          <pointsize>11</pointsize>
+          <pointsize>9</pointsize>
           <kerning>true</kerning>
          </font>
         </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-border-radius:0px;</string>
+        <property name="text">
+         <string>Recipients email</string>
         </property>
        </widget>
       </item>
@@ -1217,13 +1280,25 @@ border-radius:0px;</string>
         </property>
         <property name="minimumSize">
          <size>
-          <width>74</width>
-          <height>20</height>
+          <width>65</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="font">
          <font>
-          <pointsize>11</pointsize>
+          <pointsize>9</pointsize>
          </font>
         </property>
         <property name="cursor">
@@ -1231,23 +1306,10 @@ border-radius:0px;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 0, 0);
-border-radius:10px;</string>
+border-radius:5px;</string>
         </property>
         <property name="text">
          <string>Delete</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text">
-         <string>Subject</string>
         </property>
        </widget>
       </item>
@@ -1259,7 +1321,7 @@ border-radius:10px;</string>
        <x>6</x>
        <y>60</y>
        <width>371</width>
-       <height>95</height>
+       <height>87</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1267,11 +1329,29 @@ border-radius:10px;</string>
 border-radius:10px;</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_5">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>24</height>
+         </size>
+        </property>
         <property name="font">
          <font>
-          <pointsize>10</pointsize>
+          <pointsize>9</pointsize>
           <kerning>true</kerning>
          </font>
         </property>
@@ -1287,18 +1367,27 @@ border-radius:10px;</string>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="6,1">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
+        <property name="spacing">
+         <number>1</number>
+        </property>
         <item>
          <widget class="QLineEdit" name="addRecipientInput">
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>23</height>
+            <height>22</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>15</height>
            </size>
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>9</pointsize>
             <kerning>true</kerning>
            </font>
           </property>
@@ -1328,12 +1417,18 @@ background-color: rgb(255, 255, 255);</string>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>20</height>
+            <height>15</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
           <property name="font">
            <font>
-            <pointsize>12</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="cursor">
@@ -1357,11 +1452,17 @@ border-radius:10px;
       </item>
       <item>
        <widget class="QLabel" name="errorTextRecipientsEmailLabel">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>10</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string>Error Label</string>
         </property>
        </widget>
       </item>
@@ -1395,6 +1496,138 @@ border-radius:10px;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="gridWidget_2" native="true">
+     <property name="geometry">
+      <rect>
+       <x>6</x>
+       <y>240</y>
+       <width>371</width>
+       <height>73</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+background-color: rgb(85, 170, 255);
+border-radius:10px;</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0" columnstretch="0,0,0">
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="subjectDeleteButton_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>65</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 0, 0);
+border-radius:5px;</string>
+        </property>
+        <property name="text">
+         <string>Delete</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="subjectDeleteCombo">
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>17</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:0px;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_17">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Subject</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="sellectProjectComboDeleteSubject">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>17</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-radius:0px;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_15">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Sellect project</string>
         </property>
        </widget>
       </item>
