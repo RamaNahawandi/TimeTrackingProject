@@ -57,7 +57,6 @@ class LoginUI(QDialog):
                         data["userNames"].append(self.user_id)
                         user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
                         data["User"][self.user_id]=user_dict
-                        data["User"]
                         jsonFile.seek(0)  # rewind
                         json.dump(data, jsonFile)
                         jsonFile.truncate()                    
