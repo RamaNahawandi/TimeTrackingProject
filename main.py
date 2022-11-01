@@ -1,6 +1,6 @@
 import time
 import datetime
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets,QtCore
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
 import sys
@@ -8,7 +8,7 @@ import json
 from email_validator import validate_email, EmailNotValidError
 
 
-
+from passlib.context import CryptContext
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
@@ -26,18 +26,40 @@ class LoginUI(QDialog):
         self.errorTextSignUp.setText('')
         self.loginButton.clicked.connect(self.log_in)
         self.signUpButton.clicked.connect(self.sign_up)
+        self.loginPassword.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.signupPassword.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.signupPasswordconfirm.setEchoMode(QtWidgets.QLineEdit.Password)
+        
 
     def log_in(self):
+        context = CryptContext(
+    schemes=["pbkdf2_sha256"],
+    default="pbkdf2_sha256",
+    pbkdf2_sha256__default_rounds=50000)
+
         self.user_id=self.emailInputLogin.text()
+        self.user_password=self.loginPassword.text()
         LoginUI.user_id=self.user_id
-        if self.user_id in self.user_names:
-            self.go_main_menu()
+        if self.user_id in self.user_names.keys():
+            if context.verify(self.user_password, self.user_names[self.user_id] ):
+                self.go_main_menu()
+            else:
+                self.errorTextLogin.setText('Check your pasword please')
+                
         else:
             self.errorTextLogin.setText('Check your username or sign up please')
             
     def sign_up(self):
+        context = CryptContext(
+    schemes=["pbkdf2_sha256"],
+    default="pbkdf2_sha256",
+    pbkdf2_sha256__default_rounds=50000)
+        
         self.user_id=self.nameInputSignUp.text()
-        LoginUI.user_id=self.user_id
+        self.user_password=self.signupPassword.text()
+        self.user_confirm_password=self.signupPasswordconfirm.text()
+        hashed_password=context.hash(self.user_confirm_password)
+        
         if len(self.user_id)==0:
             self.errorTextSignUp.setText('Please write your name')
         elif self.user_id in self.user_names:
@@ -50,18 +72,22 @@ class LoginUI(QDialog):
                 self.user_email = v["email"] 
                 if self.user_email in self.user_emails:
                     self.errorTextSignUp.setText('This email is already exist')
-                else:                                
-                    with open("json.json", "r+") as jsonFile:
-                        data = json.load(jsonFile)   
-                        data["userEmails"].append(self.user_email)
-                        data["userNames"].append(self.user_id)
-                        user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
-                        data["User"][self.user_id]=user_dict
-                        data["User"]
-                        jsonFile.seek(0)  # rewind
-                        json.dump(data, jsonFile)
-                        jsonFile.truncate()                    
-                    self.go_main_menu()                                    
+                else:
+                    if context.verify(self.user_password,hashed_password):                               
+                        with open("json.json", "r+") as jsonFile:
+                            data = json.load(jsonFile)   
+                            data["userEmails"].append(self.user_email)
+                            data["userNames"][self.user_id]=hashed_password
+                            user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
+                            data["User"][self.user_id]=user_dict
+                            jsonFile.seek(0)  
+                            json.dump(data, jsonFile)
+                            jsonFile.truncate()
+                        LoginUI.user_id=self.user_id                    
+                        self.go_main_menu()
+                    else:
+                        self.errorTextSignUp.setText('Check password please they do not match')
+                                                            
             except EmailNotValidError :
                 self.errorTextSignUp.setText('Check email please, that is not a valid email')
                        
@@ -89,7 +115,6 @@ class MainMenuUI(QDialog):
         self.combo_sellect_project.currentIndexChanged.connect(self.show_subject_pomodoro)
         self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
         self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
-        self.list=[]
         self.combo_set()
         
         
@@ -145,8 +170,7 @@ class MainMenuUI(QDialog):
             else:
                 self.user_dict['Recipents'].append(self.email)
                 self.errorTextRecipientsEmailLabel.setText('')
-                self.deleteRecipientCombo.addItem(self.email)
-                                          
+                self.deleteRecipientCombo.addItem(self.email)                                          
         except EmailNotValidError:
             self.errorTextRecipientsEmailLabel.setText('Check email please, that is not a valid email')
             
@@ -163,6 +187,7 @@ class MainMenuUI(QDialog):
         self.projectDeleteCombo.removeItem(index)
         self.sellectProjectComboSubjectMenu.removeItem(index)
         self.sellectProjectComboDeleteSubject.removeItem(index)
+        self.showSummaryProjectCombo.removeItem(index)
         
     def delete_subject(self):
         content1 = self.sellectProjectComboDeleteSubject.currentText()
@@ -173,22 +198,7 @@ class MainMenuUI(QDialog):
         
     def start_pomodoro(self):
         pass
-        
-        
-    
-        
-        
-        
-        
-        
-        
-            
-    
-            
-            
-    
-    
-       
+                 
 
 class PomodoroUI(QDialog):
     def __init__(self):
@@ -200,6 +210,43 @@ class ShortBreakUI(QDialog):
     def __init__(self):
         super(ShortBreakUI,self).__init__()
         loadUi("./UI/shortBreak.ui",self)
+        self.myTimer = QtCore.QTimer(self)
+        self.startButton.clicked.connect(self.startTimer)
+    
+        self.time_left_int =6
+        self.update_gui()
+  
+    def startTimer(self):
+        self.time_left_int = 6
+        self.myTimer.timeout.connect(self.timerTimeout)
+        self.myTimer.start(1000)
+
+    def timerTimeout(self):
+        
+        self.time_left_int -= 1
+        if self.time_left_int == 0:
+            self.go_pomodoro()
+
+        self.update_gui()
+        
+    def go_pomodoro(self):
+        main_menu = PomodoroUI()
+        widget.addWidget(main_menu)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def update_gui(self):
+        minsec = self.secs_to_minsec(self.time_left_int)
+        self.timeLabel.setText(minsec)
+        
+   
+    def secs_to_minsec(self,secs: int):
+        mins = secs // 60
+        secs = secs % 60
+        minsec = f'{mins:02}:{secs:02}'
+        return minsec
+
+        
+        
    
     
     
@@ -217,8 +264,8 @@ UI = LoginUI() # This line determines which screen you will load at first
 # You can also try one of other screens to see them.
     # UI = MainMenuUI()
     # UI = PomodoroUI()
-    # UI = ShortBreakUI()
-    # UI = LongBreakUI()
+# UI = ShortBreakUI()
+# UI = LongBreakUI()
 # this block is for make a pup.up message   
 # self.messagebox=QtWidgets.QMessageBox()
 # self.messagebox.setText(f"Check your email adress or sign up please")
