@@ -1,6 +1,6 @@
 import time
 import datetime
-from PyQt5 import QtWidgets,QtCore
+from PyQt5 import QtWidgets,QtCore,QtCore
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
 import sys
@@ -8,7 +8,7 @@ import json
 from email_validator import validate_email, EmailNotValidError
 
 
-from passlib.context import CryptContext
+
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
@@ -26,40 +26,20 @@ class LoginUI(QDialog):
         self.errorTextSignUp.setText('')
         self.loginButton.clicked.connect(self.log_in)
         self.signUpButton.clicked.connect(self.sign_up)
-        self.loginPassword.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.signupPassword.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.signupPasswordconfirm.setEchoMode(QtWidgets.QLineEdit.Password)
-        
 
     def log_in(self):
-        context = CryptContext(
-    schemes=["pbkdf2_sha256"],
-    default="pbkdf2_sha256",
-    pbkdf2_sha256__default_rounds=50000)
-
         self.user_id=self.emailInputLogin.text()
         self.user_password=self.loginPassword.text()
+        
         LoginUI.user_id=self.user_id
-        if self.user_id in self.user_names.keys():
-            if context.verify(self.user_password, self.user_names[self.user_id] ):
-                self.go_main_menu()
-            else:
-                self.errorTextLogin.setText('Check your pasword please')
-                
+        if self.user_id in self.user_names:
+            self.go_main_menu()
         else:
             self.errorTextLogin.setText('Check your username or sign up please')
             
     def sign_up(self):
-        context = CryptContext(
-    schemes=["pbkdf2_sha256"],
-    default="pbkdf2_sha256",
-    pbkdf2_sha256__default_rounds=50000)
-        
         self.user_id=self.nameInputSignUp.text()
-        self.user_password=self.signupPassword.text()
-        self.user_confirm_password=self.signupPasswordconfirm.text()
-        hashed_password=context.hash(self.user_confirm_password)
-        
+        LoginUI.user_id=self.user_id
         if len(self.user_id)==0:
             self.errorTextSignUp.setText('Please write your name')
         elif self.user_id in self.user_names:
@@ -170,7 +150,8 @@ class MainMenuUI(QDialog):
             else:
                 self.user_dict['Recipents'].append(self.email)
                 self.errorTextRecipientsEmailLabel.setText('')
-                self.deleteRecipientCombo.addItem(self.email)                                          
+                self.deleteRecipientCombo.addItem(self.email)
+                                          
         except EmailNotValidError:
             self.errorTextRecipientsEmailLabel.setText('Check email please, that is not a valid email')
             
