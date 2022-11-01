@@ -73,20 +73,23 @@ class LoginUI(QDialog):
                 if self.user_email in self.user_emails:
                     self.errorTextSignUp.setText('This email is already exist')
                 else:
-                    if context.verify(self.user_password,hashed_password):                               
-                        with open("json.json", "r+") as jsonFile:
-                            data = json.load(jsonFile)   
-                            data["userEmails"].append(self.user_email)
-                            data["userNames"][self.user_id]=hashed_password
-                            user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
-                            data["User"][self.user_id]=user_dict
-                            jsonFile.seek(0)  
-                            json.dump(data, jsonFile)
-                            jsonFile.truncate()
-                        LoginUI.user_id=self.user_id                    
-                        self.go_main_menu()
-                    else:
-                        self.errorTextSignUp.setText('Check password please they do not match')
+                    if len(self.user_password)==0:
+                        self.errorTextSignUp.setText('Please assign a password')
+                    else:  
+                        if context.verify(self.user_password,hashed_password):                               
+                            with open("json.json", "r+") as jsonFile:
+                                data = json.load(jsonFile)   
+                                data["userEmails"].append(self.user_email)
+                                data["userNames"][self.user_id]=hashed_password
+                                user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
+                                data["User"][self.user_id]=user_dict
+                                jsonFile.seek(0)  
+                                json.dump(data, jsonFile)
+                                jsonFile.truncate()
+                            LoginUI.user_id=self.user_id                    
+                            self.go_main_menu()
+                        else:
+                            self.errorTextSignUp.setText('Check password please they do not match')
                                                             
             except EmailNotValidError :
                 self.errorTextSignUp.setText('Check email please, that is not a valid email')
@@ -245,11 +248,6 @@ class ShortBreakUI(QDialog):
         minsec = f'{mins:02}:{secs:02}'
         return minsec
 
-        
-        
-   
-    
-    
 
 
 class LongBreakUI(QDialog):
