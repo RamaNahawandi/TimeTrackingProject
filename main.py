@@ -1,6 +1,6 @@
 import time
 import datetime
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets,QtCore
 from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
 import sys
@@ -39,7 +39,6 @@ class LoginUI(QDialog):
 
         self.user_id=self.emailInputLogin.text()
         self.user_password=self.loginPassword.text()
-        print('armut',self.user_password)
         LoginUI.user_id=self.user_id
         if self.user_id in self.user_names.keys():
             if context.verify(self.user_password, self.user_names[self.user_id] ):
@@ -87,7 +86,7 @@ class LoginUI(QDialog):
                         LoginUI.user_id=self.user_id                    
                         self.go_main_menu()
                     else:
-                        self.errorTextSignUp.setText('Check password please they does not match')
+                        self.errorTextSignUp.setText('Check password please they do not match')
                                                             
             except EmailNotValidError :
                 self.errorTextSignUp.setText('Check email please, that is not a valid email')
@@ -116,7 +115,6 @@ class MainMenuUI(QDialog):
         self.combo_sellect_project.currentIndexChanged.connect(self.show_subject_pomodoro)
         self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
         self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
-        self.list=[]
         self.combo_set()
         
         
@@ -189,6 +187,7 @@ class MainMenuUI(QDialog):
         self.projectDeleteCombo.removeItem(index)
         self.sellectProjectComboSubjectMenu.removeItem(index)
         self.sellectProjectComboDeleteSubject.removeItem(index)
+        self.showSummaryProjectCombo.removeItem(index)
         
     def delete_subject(self):
         content1 = self.sellectProjectComboDeleteSubject.currentText()
@@ -199,12 +198,7 @@ class MainMenuUI(QDialog):
         
     def start_pomodoro(self):
         pass
-        
-        
-    
-        
-        
-              
+                 
 
 class PomodoroUI(QDialog):
     def __init__(self):
@@ -216,10 +210,42 @@ class ShortBreakUI(QDialog):
     def __init__(self):
         super(ShortBreakUI,self).__init__()
         loadUi("./UI/shortBreak.ui",self)
-   
+        self.myTimer = QtCore.QTimer(self)
+        self.startButton.clicked.connect(self.startTimer)
     
-    
+        self.time_left_int =6
+        self.update_gui()
+  
+    def startTimer(self):
+        self.time_left_int = 6
+        self.myTimer.timeout.connect(self.timerTimeout)
+        self.myTimer.start(1000)
 
+    def timerTimeout(self):
+        
+        self.time_left_int -= 1
+        if self.time_left_int == 0:
+            self.go_pomodoro()
+
+        self.update_gui()
+        
+    def go_pomodoro(self):
+        main_menu = PomodoroUI()
+        widget.addWidget(main_menu)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+
+    def update_gui(self):
+        minsec = self.secs_to_minsec(self.time_left_int)
+        self.timeLabel.setText(minsec)
+        
+   
+    def secs_to_minsec(self,secs: int):
+        mins = secs // 60
+        secs = secs % 60
+        minsec = f'{mins:02}:{secs:02}'
+        return minsec
+
+        
 
 class LongBreakUI(QDialog):
     def __init__(self):
@@ -233,8 +259,8 @@ UI = LoginUI() # This line determines which screen you will load at first
 # You can also try one of other screens to see them.
     # UI = MainMenuUI()
     # UI = PomodoroUI()
-    # UI = ShortBreakUI()
-    # UI = LongBreakUI()
+# UI = ShortBreakUI()
+# UI = LongBreakUI()
 # this block is for make a pup.up message   
 # self.messagebox=QtWidgets.QMessageBox()
 # self.messagebox.setText(f"Check your email adress or sign up please")
