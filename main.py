@@ -100,6 +100,9 @@ class LoginUI(QDialog):
         widget.setCurrentIndex(widget.currentIndex()+1)
 
 class MainMenuUI(QDialog):
+    project=""
+    subject=''
+    
     def __init__(self):
         super(MainMenuUI,self).__init__()
         loadUi("./UI/mainMenu.ui",self)
@@ -121,7 +124,27 @@ class MainMenuUI(QDialog):
         self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
         self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
         self.combo_set()
-        
+    
+    def start_pomodoro(self):
+        project=self.combo_sellect_project.currentText()
+        subject=self.combo_sellect_subject.currentText()
+        MainMenuUI.project=project
+        MainMenuUI.subject=subject
+        with open("json.json", "r+") as jsonFile:
+            data = json.load(jsonFile)   
+            data["User"][self.user_id]=self.user_dict
+            jsonFile.seek(0)  
+            json.dump(data, jsonFile)
+            jsonFile.truncate()
+        self.go_pomodoro
+  
+    def go_pomodoro(self):
+        main_menu = PomodoroUI()
+        widget.addWidget(main_menu)
+        widget.setCurrentIndex(widget.currentIndex()+1)
+         
+    
+       
     def add_project(self):
         project=self.addProjectInput.text()
         if project in self.user_dict["projects"]:
@@ -136,9 +159,7 @@ class MainMenuUI(QDialog):
             self.combo_sellect_project.addItem(project)    
             self.sellectProjectComboDeleteSubject.addItem(project)    
             self.showSummaryProjectCombo.addItem(project)    
-           
-    
-    
+
     def add_subject(self):
         project=self.sellectProjectComboSubjectMenu.currentText()
         subject=self.addSubjectInput.text()
@@ -150,11 +171,7 @@ class MainMenuUI(QDialog):
             self.user_dict["projects"][project][subject]={}
             self.errorTextSubjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
             self.errorTextSubjectLabel.setText('This subject is added')
-            
-        
-        
-        
-          
+               
         
     def show_subject_history(self):
         content = self.showSummaryProjectCombo.currentText()
@@ -243,14 +260,18 @@ class MainMenuUI(QDialog):
         self.showSummarySubjectCombo.removeItem(index)
         self.combo_sellect_subject.removeItem(index)
         
-    def start_pomodoro(self):
-        pass
+    
                  
 
 class PomodoroUI(QDialog):
     def __init__(self):
         super(PomodoroUI,self).__init__()
         loadUi("./UI/pomodoro.ui",self)
+        self.user_id=LoginUI.user_id
+        self.project=MainMenuUI.project
+        self.subject=MainMenuUI.subject
+        
+        
 
 
 class ShortBreakUI(QDialog):
