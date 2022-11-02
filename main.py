@@ -86,7 +86,7 @@ class LoginUI(QDialog):
                                 data = json.load(jsonFile)   
                                 data["userEmails"].append(self.user_email)
                                 data["userNames"][self.user_id]=hashed_password
-                                user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[],"projects":{}}
+                                user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[self.user_email],"projects":{}}
                                 data["User"][self.user_id]=user_dict
                                 jsonFile.seek(0)  
                                 json.dump(data, jsonFile)
@@ -99,7 +99,7 @@ class LoginUI(QDialog):
             except EmailNotValidError :
                 self.errorTextSignUp.setText('Check email please, that is not a valid email')
                        
-    def go_main_menu(self):
+    def go_main_menu(self):    
         main_menu = MainMenuUI()
         widget.addWidget(main_menu)
         widget.setCurrentIndex(widget.currentIndex()+1)
@@ -111,6 +111,7 @@ class MainMenuUI(QDialog):
     def __init__(self):
         super(MainMenuUI,self).__init__()
         loadUi("./UI/mainMenu.ui",self)
+        widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
         self.user_id=LoginUI.user_id
         with open('json.json', 'r') as f:
             self.users = json.load(f)
@@ -144,12 +145,10 @@ class MainMenuUI(QDialog):
         self.go_pomodoro()
   
     def go_pomodoro(self):
-        main_menu = PomodoroUI()
+        main_menu = PomodoroUI()        
         widget.addWidget(main_menu)
         widget.setCurrentIndex(widget.currentIndex()+1)
-         
-    
-       
+           
     def add_project(self):
         project=self.addProjectInput.text()
         if project in self.user_dict["projects"]:
@@ -181,26 +180,30 @@ class MainMenuUI(QDialog):
     def show_subject_history(self):
         content = self.showSummaryProjectCombo.currentText()
         self.showSummarySubjectCombo.clear()
-        if content!="All":   
-            for i in self.user_dict["projects"][content].keys():
-                self.showSummarySubjectCombo.addItem(i)
-            self.showSummarySubjectCombo.addItem("All")
-        else:
-            self.showSummarySubjectCombo.addItem("All")
+        if len(content)>0:
+            
+            if content!="All":   
+                for i in self.user_dict["projects"][content].keys():
+                    self.showSummarySubjectCombo.addItem(i)
+                self.showSummarySubjectCombo.addItem("All")
+            else:
+                self.showSummarySubjectCombo.addItem("All")
 
                
     def show_subject_pomodoro(self):
         content = self.combo_sellect_project.currentText()
         self.combo_sellect_subject.clear()
-        for i in self.user_dict["projects"][content].keys():
-            self.combo_sellect_subject.addItem(i)
+        if len(content)>0:    
+            for i in self.user_dict["projects"][content].keys():
+                self.combo_sellect_subject.addItem(i)
         
         
     def show_subject(self):
         content = self.sellectProjectComboDeleteSubject.currentText()
         self.subjectDeleteCombo.clear()
-        for i in self.user_dict["projects"][content].keys():
-            self.subjectDeleteCombo.addItem(i)
+        if len(content)>0:    
+            for i in self.user_dict["projects"][content].keys():
+                self.subjectDeleteCombo.addItem(i)
     
     def combo_set(self):
         for i in self.user_dict['Recipents']:
@@ -249,6 +252,7 @@ class MainMenuUI(QDialog):
         self.projectDeleteCombo.removeItem(index)
         self.sellectProjectComboSubjectMenu.removeItem(index)
         self.sellectProjectComboDeleteSubject.removeItem(index)
+        self.combo_sellect_project.removeItem(index)
         index=self.showSummaryProjectCombo.findText(content)
         self.showSummaryProjectCombo.removeItem(index)
             
@@ -269,6 +273,7 @@ class PomodoroUI(QDialog):
     def __init__(self):
         super(PomodoroUI,self).__init__()
         loadUi("./UI/pomodoro.ui",self)
+        widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
         self.user_id=LoginUI.user_id
         self.project=MainMenuUI.project
         self.subject=MainMenuUI.subject
@@ -281,6 +286,7 @@ class ShortBreakUI(QDialog):
     def __init__(self):
         super(ShortBreakUI,self).__init__()
         loadUi("./UI/shortBreak.ui",self)
+        widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
         self.myTimer = QtCore.QTimer(self)
         self.startButton.clicked.connect(self.startTimer)
     
@@ -322,15 +328,16 @@ class LongBreakUI(QDialog):
     def __init__(self):
         super(LongBreakUI,self).__init__()
         loadUi("./UI/longBreak.ui",self)
+        widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 
 
 app = QApplication(sys.argv)
-# UI = LoginUI() # This line determines which screen you will load at first
+UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
     # UI = MainMenuUI()
     # UI = PomodoroUI()
-UI = ShortBreakUI()
+# UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   
 # self.messagebox=QtWidgets.QMessageBox()
@@ -342,6 +349,6 @@ widget = QtWidgets.QStackedWidget()
 widget.addWidget(UI)
 widget.setFixedWidth(800)
 widget.setFixedHeight(600)
-widget.setWindowTitle("Time Tracking App")
+widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 widget.show()
 sys.exit(app.exec_())
