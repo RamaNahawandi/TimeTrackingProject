@@ -113,6 +113,8 @@ class MainMenuUI(QDialog):
         self.addRecipientButton.clicked.connect(self.add_reciept)
         self.deleteRecipientButton.clicked.connect(self.delete_reciept)
         self.projectDeleteButton.clicked.connect(self.delete_project)
+        self.addProjectButton.clicked.connect(self.add_project)
+        self.addSubjectButton.clicked.connect(self.add_subject)
         self.button_start_pomodoro.clicked.connect(self.start_pomodoro)
         self.sellectProjectComboDeleteSubject.currentIndexChanged.connect(self.show_subject)
         self.combo_sellect_project.currentIndexChanged.connect(self.show_subject_pomodoro)
@@ -120,7 +122,39 @@ class MainMenuUI(QDialog):
         self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
         self.combo_set()
         
+    def add_project(self):
+        project=self.addProjectInput.text()
+        if project in self.user_dict["projects"]:
+            self.errorTextProjectLabel.setStyleSheet("color: rgb(255, 0, 0);")
+            self.errorTextProjectLabel.setText('This project is already exist')
+        else:
+            self.errorTextProjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
+            self.errorTextProjectLabel.setText('This project is added')
+            self.user_dict["projects"][project]={}
+            self.projectDeleteCombo.addItem(project)    
+            self.sellectProjectComboSubjectMenu.addItem(project)    
+            self.combo_sellect_project.addItem(project)    
+            self.sellectProjectComboDeleteSubject.addItem(project)    
+            self.showSummaryProjectCombo.addItem(project)    
+           
+    
+    
+    def add_subject(self):
+        project=self.sellectProjectComboSubjectMenu.currentText()
+        subject=self.addSubjectInput.text()
+        if subject in self.user_dict["projects"][project]:
+            self.errorTextSubjectLabel.setStyleSheet("color: rgb(255, 0, 0);")
+            self.errorTextSubjectLabel.setText('This subject is already exist')
+            
+        else:
+            self.user_dict["projects"][project][subject]={}
+            self.errorTextSubjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
+            self.errorTextSubjectLabel.setText('This subject is added')
+            
         
+        
+        
+          
         
     def show_subject_history(self):
         content = self.showSummaryProjectCombo.currentText()
@@ -132,8 +166,7 @@ class MainMenuUI(QDialog):
         else:
             self.showSummarySubjectCombo.addItem("All")
 
-            
-    
+               
     def show_subject_pomodoro(self):
         content = self.combo_sellect_project.currentText()
         self.combo_sellect_subject.clear()
@@ -169,12 +202,16 @@ class MainMenuUI(QDialog):
             v = validate_email(self.email)
             self.email = v["email"] 
             if self.email in self.user_dict['Recipents']:
+                self.errorTextRecipientsEmailLabel.setStyleSheet("color: rgb(255, 0, 0);")
                 self.errorTextRecipientsEmailLabel.setText('This mail is already exist')
+                
             else:
+                self.errorTextRecipientsEmailLabel.setStyleSheet("color: rgb(0, 255, 0);")
+                self.errorTextRecipientsEmailLabel.setText('This mail is added')
                 self.user_dict['Recipents'].append(self.email)
-                self.errorTextRecipientsEmailLabel.setText('')
                 self.deleteRecipientCombo.addItem(self.email)                                          
         except EmailNotValidError:
+            self.errorTextRecipientsEmailLabel.setStyleSheet("color: rgb(255, 0, 0);")
             self.errorTextRecipientsEmailLabel.setText('Check email please, that is not a valid email')
             
     def delete_reciept(self):
@@ -190,7 +227,12 @@ class MainMenuUI(QDialog):
         self.projectDeleteCombo.removeItem(index)
         self.sellectProjectComboSubjectMenu.removeItem(index)
         self.sellectProjectComboDeleteSubject.removeItem(index)
-        self.showSummaryProjectCombo.removeItem(index)
+        index2=self.showSummaryProjectCombo.findText('All')
+        if index2<=index:
+            self.showSummaryProjectCombo.removeItem(index+1)
+        else:
+            self.showSummaryProjectCombo.removeItem(index)
+            
         
     def delete_subject(self):
         content1 = self.sellectProjectComboDeleteSubject.currentText()
@@ -198,6 +240,8 @@ class MainMenuUI(QDialog):
         index = self.subjectDeleteCombo.findText(content)
         self.user_dict["projects"][content1].pop(content)
         self.subjectDeleteCombo.removeItem(index)
+        self.showSummarySubjectCombo.removeItem(index)
+        self.combo_sellect_subject.removeItem(index)
         
     def start_pomodoro(self):
         pass

@@ -228,7 +228,7 @@ border-radius:10px;</string>
          <string notr="true">background-color: rgb(85, 170, 255);
 border-radius:10px;</string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="4,3,3,2,3">
+        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="4,3,3,0,3">
          <property name="spacing">
           <number>9</number>
          </property>
@@ -1352,7 +1352,7 @@ border-radius:5px;</string>
       <string notr="true">background-color: rgb(85, 170, 255);
 border-radius:10px;</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,1">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
       <property name="spacing">
        <number>2</number>
       </property>
@@ -1397,7 +1397,7 @@ border-radius:10px;</string>
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>22</height>
+            <height>23</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -1466,11 +1466,8 @@ border-radius:10px;</string>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>10</height>
+          <height>15</height>
          </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
          <string>Error Label</string>
