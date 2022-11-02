@@ -136,7 +136,7 @@ class MainMenuUI(QDialog):
             jsonFile.seek(0)  
             json.dump(data, jsonFile)
             jsonFile.truncate()
-        self.go_pomodoro
+        self.go_pomodoro()
   
     def go_pomodoro(self):
         main_menu = PomodoroUI()
