@@ -18,11 +18,6 @@ class LoginUI(QDialog):
     def __init__(self):
         super(LoginUI,self).__init__()
         loadUi("./UI/login.ui",self)
-        self.timeTrackingText.setStyleSheet("color: rgb(255, 0, 0);")
-        self.timeTrackingText.setText('hello')
-        
-        
-        
         with open('json.json', 'r') as f:
             self.users = json.load(f)
             self.user_names=self.users["userNames"]
