@@ -18,6 +18,11 @@ class LoginUI(QDialog):
     def __init__(self):
         super(LoginUI,self).__init__()
         loadUi("./UI/login.ui",self)
+        self.timeTrackingText.setStyleSheet("color: rgb(255, 0, 0);")
+        self.timeTrackingText.setText('hello')
+        
+        
+        
         with open('json.json', 'r') as f:
             self.users = json.load(f)
             self.user_names=self.users["userNames"]
@@ -41,7 +46,7 @@ class LoginUI(QDialog):
         self.user_password=self.loginPassword.text()
         LoginUI.user_id=self.user_id
         if self.user_id in self.user_names.keys():
-            if context.verify(self.user_password, self.user_names[self.user_id] ):
+            if context.verify(self.user_password, self.users["userNames"][self.user_id] ):
                 self.go_main_menu()
             else:
                 self.errorTextLogin.setText('Check your pasword please')
@@ -244,11 +249,8 @@ class MainMenuUI(QDialog):
         self.projectDeleteCombo.removeItem(index)
         self.sellectProjectComboSubjectMenu.removeItem(index)
         self.sellectProjectComboDeleteSubject.removeItem(index)
-        index2=self.showSummaryProjectCombo.findText('All')
-        if index2<=index:
-            self.showSummaryProjectCombo.removeItem(index+1)
-        else:
-            self.showSummaryProjectCombo.removeItem(index)
+        index=self.showSummaryProjectCombo.findText(content)
+        self.showSummaryProjectCombo.removeItem(index)
             
         
     def delete_subject(self):
@@ -270,6 +272,7 @@ class PomodoroUI(QDialog):
         self.user_id=LoginUI.user_id
         self.project=MainMenuUI.project
         self.subject=MainMenuUI.subject
+
         
         
 
@@ -322,12 +325,12 @@ class LongBreakUI(QDialog):
 
 
 app = QApplication(sys.argv)
-UI = LoginUI() # This line determines which screen you will load at first
+# UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
     # UI = MainMenuUI()
     # UI = PomodoroUI()
-# UI = ShortBreakUI()
+UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   
 # self.messagebox=QtWidgets.QMessageBox()
