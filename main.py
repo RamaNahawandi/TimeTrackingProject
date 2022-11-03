@@ -270,51 +270,6 @@ class MainMenuUI(QDialog):
 		self.showSummarySubjectCombo.removeItem(index)
 		self.combo_sellect_subject.removeItem(index)
 		
-	
-				 
-
-class PomodoroUI(QDialog):
-	def __init__(self):
-		super(PomodoroUI,self).__init__()
-		loadUi("./UI/pomodoro.ui",self)
-		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
-		self.user_id=LoginUI.user_id
-		self.project=MainMenuUI.project
-		self.subject=MainMenuUI.subject
-		self.count = 1500
-		text=time.strftime('%M:%S', time.gmtime(self.count))
-		self.timeLabel.display(text)
-		self.flag = False
-		self.timer = QTimer(self)
-		self.timer.timeout.connect(self.showTime)
-		self.timer.start(1000)
-		self.pauseButton.pressed.connect(self.pause)
-		self.startButton.pressed.connect(self.start)
-		shadow = QGraphicsDropShadowEffect()
-		shadow.setBlurRadius(15)
-		self.timeLabel.setGraphicsEffect(shadow)
-		self.doneButton.clicked.connect(self.go_short_break)
-
-		
-	def showTime(self):
-		if self.flag:
-			self.count-= 1
-		text=time.strftime('%M:%S', time.gmtime(self.count))
-		self.timeLabel.display(text)
-  
-	def start(self):
-		self.flag = True
-
-	def pause(self):
-		self.flag = False
-  
-	def go_short_break(self):
-		main_menu = ShortBreakUI()
-		widget.addWidget(main_menu)
-		widget.setCurrentIndex(widget.currentIndex()+1)
-
-
-
 class ShortBreakUI(QDialog):
 	def __init__(self):
 		super(ShortBreakUI,self).__init__()
@@ -322,22 +277,20 @@ class ShortBreakUI(QDialog):
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.count = 300
 		self.component()
-		
-		
 		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-		
 	
 	def component(self):
+		self.shadow(self.skipButton)
+		self.shadow(self.startButton)
+		self.shadow(self.goToMainMenuButton)
+		self.shadow(self.timeLabel)
 		text=time.strftime('%M:%S', time.gmtime(self.count))
 		self.timeLabel.display(text)
 		self.flag = False
 		self.timer = QTimer(self)
 		self.timer.start(1000)
-		shadow = QGraphicsDropShadowEffect()
-		shadow.setBlurRadius(15)
-		self.timeLabel.setGraphicsEffect(shadow)
 		self.timer.timeout.connect(self.showTime)
   
 	def showTime(self):
@@ -348,6 +301,11 @@ class ShortBreakUI(QDialog):
   
 	def start(self):
 		self.flag = True
+
+	def shadow(self,widget):
+		shadow = QGraphicsDropShadowEffect()
+		shadow.setBlurRadius(15)
+		widget.setGraphicsEffect(shadow)
 
 	def skip(self):
 		main_menu = PomodoroUI()
@@ -357,34 +315,44 @@ class ShortBreakUI(QDialog):
 	def go_main_menu(self):
 		main_menu = MainMenuUI()
 		widget.addWidget(main_menu)
-		widget.setCurrentIndex(widget.currentIndex()+1)
+		widget.setCurrentIndex(widget.currentIndex()+1)	
+				 
+
+class PomodoroUI(ShortBreakUI,QDialog):
+	def __init__(self):
+		super(PomodoroUI,self).__init__()
+		loadUi("./UI/pomodoro.ui",self)
+		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		self.user_id=LoginUI.user_id
+		self.project=MainMenuUI.project
+		self.subject=MainMenuUI.subject
+		self.count = 1500
+		self.component()
+		self.shadow_execute()
+		self.pauseButton.pressed.connect(self.pause)
+		self.startButton.pressed.connect(self.start)
+		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
+  
+	def shadow_execute(self):
+		self.shadow(self.pauseButton)
+		self.shadow(self.doneButton)
+		self.shadow(self.addTaskWidget)
+		self.shadow(self.notFinishedButton)
+		
+	def pause(self):
+		self.flag = False
 
 
-
-class LongBreakUI(QDialog):
+class LongBreakUI(ShortBreakUI,QDialog):
 	def __init__(self):
 		super(LongBreakUI,self).__init__()
 		loadUi("./UI/longBreak.ui",self)
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
-		self.flag=False
-		self.count = 300
-		ShortBreakUI.showTime(self)
-		ShortBreakUI.component(self)
-		self.start=ShortBreakUI.start(self)
-		print(self.start)
-		
-		# self.skipButton.pressed.connect(ShortBreakUI.skip(self))
+		self.count = 1800
+		self.component()
+		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
-		# self.goToMainMenuButton.clicked.connect(ShortBreakUI.go_main_menu(self))
-
- 
-	def showTime(self):
-		if self.flag:
-			self.count-= 1
-		text=time.strftime('%M:%S', time.gmtime(self.count))
-		self.timeLabel.display(text)
-		
-
+		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
 
 
 app = QApplication(sys.argv)

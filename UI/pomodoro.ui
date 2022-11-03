@@ -54,8 +54,8 @@ color:rgb(255, 255, 255);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgba(195, 141, 179, 89);
-border-radius:30px;
+     <string notr="true">background-color:rgba(195, 141, 179, 150);
+border-radius:10px;
 </string>
     </property>
     <widget class="QLabel" name="addYourTasksText">
@@ -112,11 +112,17 @@ border-radius:10px;
     <widget class="QPushButton" name="addTask">
      <property name="geometry">
       <rect>
-       <x>360</x>
-       <y>30</y>
-       <width>81</width>
-       <height>21</height>
+       <x>358</x>
+       <y>20</y>
+       <width>87</width>
+       <height>33</height>
       </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="font">
       <font>
@@ -218,8 +224,8 @@ font: 10pt &quot;Segoe UI&quot;;</string>
    <widget class="QLabel" name="numberOfSession">
     <property name="geometry">
      <rect>
-      <x>508</x>
-      <y>18</y>
+      <x>574</x>
+      <y>20</y>
       <width>27</width>
       <height>41</height>
      </rect>
@@ -260,9 +266,8 @@ font: 10pt &quot;Segoe UI&quot;;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgba(195, 141, 179, 89);
-border-radius:30px;
-</string>
+     <string notr="true">background-color:rgba(195, 141, 179, 150);
+border-radius:10px;</string>
     </property>
     <widget class="QLabel" name="tasksBelow">
      <property name="geometry">
@@ -300,10 +305,10 @@ font: 14pt &quot;Segoe UI&quot;;</string>
     <widget class="QPushButton" name="labelAsNotFinishedButton">
      <property name="geometry">
       <rect>
-       <x>440</x>
-       <y>20</y>
-       <width>181</width>
-       <height>21</height>
+       <x>432</x>
+       <y>10</y>
+       <width>197</width>
+       <height>39</height>
       </rect>
      </property>
      <property name="font">
@@ -390,12 +395,24 @@ padding:6px;
       <x>248</x>
       <y>376</y>
       <width>271</width>
-      <height>114</height>
+      <height>122</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>13</number>
+       </property>
+       <property name="leftMargin">
+        <number>13</number>
+       </property>
+       <property name="rightMargin">
+        <number>13</number>
+       </property>
+       <property name="bottomMargin">
+        <number>3</number>
+       </property>
        <item>
         <widget class="QPushButton" name="startButton">
          <property name="font">
