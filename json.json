@@ -1,27 +1,26 @@
 {
-  "userEmails": [
-    "rima@outlook.com"
-  ],
-  "userNames": {
-    "rima":"$pbkdf2-sha256$50000$8D5njDHmPEeolXLuPefcuw$KbEX9jklNNCY9tw6aPljhTcsBb72pdas.XObb4V7Chk"
-},
-  "User": {"rima":
-    {
-      "userName": "rima",
-      "useremail": "rima@outlook.com",
-      "Recipents": [
-        "rima@outlook.com",
-        "friend1@gmail.com",
-        "friend2@gmail.com"
-      ],
-      "projects": {
-        "project1Math": {
-          "subject1 Addition": {
-            "task1: positive numbers": {
+    "userEmails": [
+      "rima@outlook.com"
+    ],
+    "userNames": {
+      "rima": "$pbkdf2-sha256$50000$8D5njDHmPEeolXLuPefcuw$KbEX9jklNNCY9tw6aPljhTcsBb72pdas.XObb4V7Chk"
+    },
+    "User": {
+      "rima": {
+        "userName": "rima",
+        "useremail": "rima@outlook.com",
+        "Recipents": [
+          "rima@outlook.com",
+          "friend1@gmail.com",
+          "friend2@gmail.com"
+        ],
+        "projects": {
+          "project1Math": {
+            "subject1 Addition": {
               "session1": {
                 "session_number": 1,
-                "session_startTime": "9:00",
-                "session_endTime": "9:30",
+                "session_startTime": "10:00",
+                "session_endTime": "10:00",
                 "sessions_date": "30-10-2022",
                 "tasks": [
                   {
@@ -45,7 +44,7 @@
                 ]
               }
             },
-            "task2 Substract numbers": {
+            "subject2 Substraction": {
               "session1": {
                 "session_number": 1,
                 "session_startTime": "10:00",
@@ -61,8 +60,8 @@
               }
             }
           },
-          "subject2 Substraction": {
-            "task1": {
+          "project2History": {
+            "subject1": {
               "session1": {
                 "session_number": 1,
                 "session_startTime": "10:00",
@@ -77,30 +76,9 @@
                 ]
               }
             }
-          }
-        },
-        "project2History": {
-          "subject1": {
-            "task1": {
-              "session1": {
-                "session_number": 1,
-                "session_startTime": "10:00",
-                "session_endTime": "10:00",
-                "sessions_date": "30-10-2022",
-                "tasks": [
-                  {
-                    "task1": "done",
-                    "task2": "done",
-                    "task3": "done"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "project3Physics": {
-          "subject1": {
-            "task1": {
+          },
+          "project3Physics": {
+            "subject1": {
               "session1": {
                 "session_number": 1,
                 "session_startTime": "10:00",
@@ -120,4 +98,3 @@
       }
     }
   }
-}
