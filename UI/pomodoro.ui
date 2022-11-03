@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>795</width>
+    <width>800</width>
     <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Widget</string>
@@ -22,39 +34,13 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>600</height>
+     <height>599</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(203, 34, 79);
 color:rgb(255, 255, 255);</string>
    </property>
-   <widget class="QLabel" name="timeLabel">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>190</y>
-      <width>311</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Chalkboard</family>
-      <pointsize>106</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgba(195, 141, 179, 89);
-border-radius:30px;</string>
-    </property>
-    <property name="text">
-     <string>25:00</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QWidget" name="addTaskWidget" native="true">
     <property name="enabled">
      <bool>true</bool>
@@ -75,16 +61,18 @@ border-radius:30px;
     <widget class="QLabel" name="addYourTasksText">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>20</x>
        <y>10</y>
-       <width>321</width>
+       <width>331</width>
        <height>20</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
-       <pointsize>16</pointsize>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
        <bold>false</bold>
        <underline>false</underline>
       </font>
@@ -93,7 +81,8 @@ border-radius:30px;
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgba(255, 255, 255, 0);</string>
+      <string notr="true">background-color:rgba(255, 255, 255, 0);
+font: 10pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>Add your task(s) for this Pomodoro session</string>
@@ -125,20 +114,29 @@ border-radius:10px;
       <rect>
        <x>360</x>
        <y>30</y>
-       <width>71</width>
-       <height>20</height>
+       <width>81</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
+       <family>Segoe UI</family>
        <pointsize>12</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(0, 0, 0);
+      <string notr="true">background-color: rgb(255, 85, 127);
+border-style:outset;
+border-width:1px;
 border-radius:10px;
-color:rgb(255, 255, 255);</string>
+border-color:white;
+</string>
      </property>
      <property name="text">
       <string>Add Task</string>
@@ -155,8 +153,10 @@ color:rgb(255, 255, 255);</string>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
-       <pointsize>14</pointsize>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
        <bold>false</bold>
        <underline>false</underline>
       </font>
@@ -165,7 +165,8 @@ color:rgb(255, 255, 255);</string>
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgba(255, 255, 255, 0);</string>
+      <string notr="true">background-color:rgba(255, 255, 255, 0);
+font: 10pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>Your tasks:</string>
@@ -188,21 +189,27 @@ color:rgb(255, 255, 255);</string>
    <widget class="QLabel" name="pomodoroSession">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>210</x>
       <y>20</y>
-      <width>241</width>
+      <width>351</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Chalkboard</family>
-      <pointsize>30</pointsize>
+      <family>Segoe UI</family>
+      <pointsize>26</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
       <underline>false</underline>
      </font>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 26pt &quot;Segoe UI&quot;;</string>
     </property>
     <property name="text">
      <string>Pomodoro Session</string>
@@ -211,21 +218,27 @@ color:rgb(255, 255, 255);</string>
    <widget class="QLabel" name="numberOfSession">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>20</y>
-      <width>61</width>
+      <x>508</x>
+      <y>18</y>
+      <width>27</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Chalkboard</family>
-      <pointsize>50</pointsize>
+      <family>Segoe UI</family>
+      <pointsize>26</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
       <underline>false</underline>
      </font>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 26pt &quot;Segoe UI&quot;;</string>
     </property>
     <property name="text">
      <string>1</string>
@@ -234,63 +247,15 @@ color:rgb(255, 255, 255);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="startStopButton">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>390</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Chalkboard</family>
-      <pointsize>30</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(0, 0, 0);
-border-radius:10px;
-color:rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="doneButton">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>460</y>
-      <width>271</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Chalkboard</family>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color:rgb(0, 0, 0);
-border-radius:10px;
-color:rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>I'am done with this session</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="notFinishedButton" native="true">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>60</x>
       <y>500</y>
-      <width>581</width>
+      <width>681</width>
       <height>61</height>
      </rect>
     </property>
@@ -302,16 +267,18 @@ border-radius:30px;
     <widget class="QLabel" name="tasksBelow">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>61</width>
-       <height>20</height>
+       <x>0</x>
+       <y>19</y>
+       <width>71</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
-       <pointsize>16</pointsize>
+       <family>Segoe UI</family>
+       <pointsize>14</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
        <bold>false</bold>
        <underline>false</underline>
       </font>
@@ -320,7 +287,8 @@ border-radius:30px;
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgba(255, 255, 255, 0);</string>
+      <string notr="true">background-color:rgba(255, 255, 255, 0);
+font: 14pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>Tasks:</string>
@@ -332,22 +300,30 @@ border-radius:30px;
     <widget class="QPushButton" name="labelAsNotFinishedButton">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>440</x>
        <y>20</y>
-       <width>141</width>
+       <width>181</width>
        <height>21</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
+       <family>Segoe UI</family>
        <pointsize>12</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(0, 0, 0);
+      <string notr="true">background-color: rgb(255, 85, 127);
+border-style:outset;
+border-width:1px;
 border-radius:10px;
-color:rgb(255, 255, 255);</string>
+border-color:white;</string>
      </property>
      <property name="text">
       <string>Label as not finished</string>
@@ -372,8 +348,8 @@ color:rgb(255, 255, 255);</string>
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>91</width>
-      <height>31</height>
+      <width>141</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -382,14 +358,156 @@ color:rgb(255, 255, 255);</string>
       <pointsize>15</pointsize>
      </font>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(0, 0, 0);
+     <string notr="true">background-color: rgb(255, 85, 127);
+border-style:outset;
+border-width:2px;
 border-radius:10px;
-color:rgb(255, 255, 255);</string>
+border-color:white;
+padding:6px;
+</string>
     </property>
     <property name="text">
      <string>Main Menu</string>
     </property>
+   </widget>
+   <widget class="QLCDNumber" name="timeLabel">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>210</y>
+      <width>267</width>
+      <height>143</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>248</x>
+      <y>376</y>
+      <width>271</width>
+      <height>114</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="startButton">
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 85, 127);
+border-style:outset;
+border-width:2px;
+border-radius:10px;
+border-color:white;
+padding:6px;
+
+</string>
+         </property>
+         <property name="text">
+          <string>Start</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pauseButton">
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>18</pointsize>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 85, 127);
+border-style:outset;
+border-width:2px;
+border-radius:10px;
+border-color:white;
+padding:6px;
+</string>
+         </property>
+         <property name="text">
+          <string>Pause</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="doneButton">
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>18</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 85, 127);
+border-style:outset;
+border-width:2px;
+border-radius:10px;
+border-color:white;
+
+</string>
+         </property>
+         <property name="text">
+          <string>I'm done</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
