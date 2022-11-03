@@ -388,13 +388,13 @@ class LongBreakUI(QDialog):
 
 
 app = QApplication(sys.argv)
-# UI = LoginUI() # This line determines which screen you will load at first
+UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
 # UI = MainMenuUI()
 # UI = PomodoroUI()
 # UI = ShortBreakUI()
-UI = LongBreakUI()
+# UI = LongBreakUI()
 # this block is for make a pup.up message   
 # self.messagebox=QtWidgets.QMessageBox()
 # self.messagebox.setText(f"Check your email adress or sign up please")
