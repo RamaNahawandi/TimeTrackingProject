@@ -331,50 +331,6 @@ class MainMenuUI(QDialog):
 		self.showSummarySubjectCombo.removeItem(index)
 		self.combo_sellect_subject.removeItem(index)
 		
-	
-				 
-
-class PomodoroUI(QDialog):
-	def __init__(self):
-		super(PomodoroUI,self).__init__()
-		loadUi("./UI/pomodoro.ui",self)
-		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
-		self.user_id=LoginUI.user_id
-		self.project=MainMenuUI.project
-		self.subject=MainMenuUI.subject
-		self.count = 1500
-		text=time.strftime('%M:%S', time.gmtime(self.count))
-		self.timeLabel.display(text)
-		self.flag = False
-		self.timer = QTimer(self)
-		self.timer.timeout.connect(self.showTime)
-		self.timer.start(1000)
-		self.pauseButton.pressed.connect(self.pause)
-		self.startButton.pressed.connect(self.start)
-		shadow = QGraphicsDropShadowEffect()
-		shadow.setBlurRadius(15)
-		self.timeLabel.setGraphicsEffect(shadow)
-		self.doneButton.clicked.connect(self.go_short_break)
-
-		
-	def showTime(self):
-		if self.flag:
-			self.count-= 1
-		text=time.strftime('%M:%S', time.gmtime(self.count))
-		self.timeLabel.display(text)
-  
-	def start(self):
-		self.flag = True
-
-	def pause(self):
-		self.flag = False
-  
-	def go_short_break(self):
-		main_menu = ShortBreakUI()
-		widget.addWidget(main_menu)
-		widget.setCurrentIndex(widget.currentIndex()+1)
-
-
 
 class ShortBreakUI(QDialog):
 	def __init__(self):
@@ -434,13 +390,37 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.user_id=LoginUI.user_id
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
+		with open('json.json', 'r') as jsonFile:
+			data = json.load(jsonFile)
+			self.task_dict=data["User"][self.user_id]["projects"][self.project][self.subject]
+
+		for i in self.task_dict:
+			self.tasksCombo.addItem(i)
 		self.count = 1500
-		print('hello')
 		self.shadow_execute()
 		self.pauseButton.pressed.connect(self.pause)
 		self.startButton.pressed.connect(self.start)
+		self.addTask.clicked.connect(self.addingTask)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-  
+
+
+	def addingTask(self):
+		task_input = self.taskInput.text()
+		if task_input in self.task_dict:
+			self.taskMessage.setStyleSheet("color: rgb(255, 0, 0);")
+			self.taskMessage.setText('This task already exists')
+		else:
+			self.task_dict[task_input]=[]
+			self.tasksCombo.addItem(task_input)
+			self.taskMessage.setStyleSheet("color: rgb(0, 255, 0);")
+			self.taskMessage.setText('This task is added')  
+			with open("json.json", "r+") as jsonFile:
+				data = json.load(jsonFile)  
+				jsonFile.seek(0)  
+				json.dump(data, jsonFile)
+				jsonFile.truncate()
+
+
 	def shadow_execute(self):
 		self.shadow(self.startButton)
 		self.shadow(self.goToMainMenuButton)
