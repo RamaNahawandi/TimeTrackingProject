@@ -290,16 +290,18 @@ class ShortBreakUI(QDialog):
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
 	
 	def component(self):
-		self.shadow(self.skipButton)
-		self.shadow(self.startButton)
-		self.shadow(self.goToMainMenuButton)
-		self.shadow(self.timeLabel)
 		text=time.strftime('%M:%S', time.gmtime(self.count))
 		self.timeLabel.display(text)
 		self.flag = False
 		self.timer = QTimer(self)
 		self.timer.start(1000)
 		self.timer.timeout.connect(self.showTime)
+  
+	def shadow_execute(self):
+		self.shadow(self.skipButton)
+		self.shadow(self.startButton)
+		self.shadow(self.goToMainMenuButton)
+		self.shadow(self.timeLabel)
   
 	def showTime(self):
 		if self.flag:
@@ -335,13 +337,15 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
 		self.count = 1500
-		self.component()
 		self.shadow_execute()
 		self.pauseButton.pressed.connect(self.pause)
 		self.startButton.pressed.connect(self.start)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
   
 	def shadow_execute(self):
+		self.shadow(self.startButton)
+		self.shadow(self.goToMainMenuButton)
+		self.shadow(self.timeLabel)
 		self.shadow(self.pauseButton)
 		self.shadow(self.doneButton)
 		self.shadow(self.addTaskWidget)
@@ -357,18 +361,18 @@ class LongBreakUI(ShortBreakUI,QDialog):
 		loadUi("./UI/longBreak.ui",self)
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.count = 1800
-		self.component()
+		self.shadow_execute()
 		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
 
 
 app = QApplication(sys.argv)
-UI = LoginUI() # This line determines which screen you will load at first
+# UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
 # UI = MainMenuUI()
-# UI = PomodoroUI()
+UI = PomodoroUI()
 # UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   
