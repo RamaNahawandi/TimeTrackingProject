@@ -389,16 +389,24 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.user_id=LoginUI.user_id
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
+		with open('json.json', 'r') as jsonFile:
+			data = json.load(jsonFile)
+			self.task_dict=data["User"][self.user_id]["projects"][self.project][self.subject]
+
+		for i in self.task_dict:
+			self.tasksCombo.addItem(i)
+			
 		self.doneORno.setText('')
 		self.count = 1500
 		print('hello')
 		self.shadow_execute()
 		self.pauseButton.pressed.connect(self.pause)
 		self.startButton.pressed.connect(self.start)
+		self.addTask.clicked.connect(self.addingTask)
 		self.doneButton.clicked.connect(self.done)
 		self.notFinishedButton.clicked.connect(self.notFinished)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-
+	
 
 	def addingTask(self):
 		task_input = self.taskInput.text()
