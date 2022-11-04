@@ -185,9 +185,7 @@ class MainMenuUI(QDialog):
 		elif period=='This week':
 			pass
         
-		
 				
-					
 			
 		self.summaryTableValuesWidget.setRowCount(len(self.subject1.keys()))
 		for i in self.subject1.keys():
@@ -392,6 +390,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
 		self.count = 1500
+		print('hello')
 		self.shadow_execute()
 		self.pauseButton.pressed.connect(self.pause)
 		self.startButton.pressed.connect(self.start)
