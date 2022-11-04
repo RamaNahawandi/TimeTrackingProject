@@ -364,11 +364,11 @@ class LongBreakUI(ShortBreakUI,QDialog):
 
 
 app = QApplication(sys.argv)
-# UI = LoginUI() # This line determines which screen you will load at first
+UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
 # UI = MainMenuUI()
-UI = PomodoroUI()
+# UI = PomodoroUI()
 # UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   
