@@ -40,7 +40,20 @@ class LoginUI(QDialog):
 		self.loginPassword.setEchoMode(QtWidgets.QLineEdit.Password)
 		self.signupPassword.setEchoMode(QtWidgets.QLineEdit.Password)
 		self.signupPasswordconfirm.setEchoMode(QtWidgets.QLineEdit.Password)
-		
+		self.shadow_execute()
+
+	def shadow_execute(self):
+		self.shadow(self.signUpWidget)
+		self.shadow(self.titleWidget)
+		self.shadow(self.loginWidget)
+		self.shadow(self.signUpButton)
+		self.shadow(self.loginButton)
+		self.shadow(self.image)
+	
+	def shadow(self,widget):
+		shadow = QGraphicsDropShadowEffect()
+		shadow.setBlurRadius(15)
+		widget.setGraphicsEffect(shadow)	
 
 	def log_in(self):
 		context = CryptContext(
