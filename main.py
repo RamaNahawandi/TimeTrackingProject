@@ -351,7 +351,6 @@ class MainMenuUI(QDialog):
 		self.subjectDeleteCombo.removeItem(index)
 		self.showSummarySubjectCombo.removeItem(index)
 		self.combo_sellect_subject.removeItem(index)
-		
 
 class ShortBreakUI(QDialog):
 	def __init__(self):
@@ -386,7 +385,7 @@ class ShortBreakUI(QDialog):
   
 	def start(self):
 		self.flag = True
-
+		
 	def shadow(self,widget):
 		shadow = QGraphicsDropShadowEffect()
 		shadow.setBlurRadius(15)
@@ -411,12 +410,23 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.user_id=LoginUI.user_id
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
+		with open('json.json', 'r') as jsonFile:
+			data = json.load(jsonFile)
+			self.task_dict=data["User"][self.user_id]["projects"][self.project][self.subject]
+
+		for i in self.task_dict:
+			self.tasksCombo.addItem(i)
+			
+		self.doneORno.setText('')
 		self.count = 1500
 		self.shadow_execute()
 		self.pauseButton.pressed.connect(self.pause)
 		self.startButton.pressed.connect(self.start)
+		self.addTask.clicked.connect(self.addingTask)
+		self.doneButton.clicked.connect(self.done)
+		self.notFinishedButton.clicked.connect(self.notFinished)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-
+	
 
 	def addingTask(self):
 		task_input = self.taskInput.text()
@@ -424,19 +434,46 @@ class PomodoroUI(ShortBreakUI,QDialog):
 			self.taskMessage.setStyleSheet("color: rgb(255, 0, 0);")
 			self.taskMessage.setText('This task already exists')
 		else:
-			self.task_dict[task_input]=[]
 			self.tasksCombo.addItem(task_input)
-			self.taskMessage.setStyleSheet("color: rgb(0, 255, 0);")
-			self.taskMessage.setText('This task is added')  
 			with open("json.json", "r+") as jsonFile:
-				data = json.load(jsonFile)  
- 
-				data["User"][self.user_id]["projects"][self.project][self.subject][task_input]=[task_input]
+				data = json.load(jsonFile)
+				self.task_dict[task_input]=[]
+				data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
 				jsonFile.seek(0)  
 				json.dump(data, jsonFile)
 				jsonFile.truncate()
+ 
+			self.taskMessage.setStyleSheet("color: rgb(0, 255, 0);")
+			self.taskMessage.setText('This task is added')  
+
+	def done(self):		
+		with open("json.json", "r+") as jsonFile:
+				data = json.load(jsonFile)
+				self.task_input=self.tasksCombo.currentText()
+				self.task_dict[self.task_input].append({ "success": True})
+				data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
+				jsonFile.seek(0)  
+				json.dump(data, jsonFile)
+				jsonFile.truncate()		
+		self.doneORno.setStyleSheet("color: rgb(0, 255, 0);")
+		self.doneORno.setText('task marked as Done') 
+		# self.doneButton.setEnabled(False)
 
 
+
+	def notFinished(self):
+		with open("json.json", "r+") as jsonFile:
+				data = json.load(jsonFile)
+				self.task_input=self.tasksCombo.currentText()
+				self.task_dict[self.task_input].append({ "success": False})
+				data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
+				jsonFile.seek(0)  
+				json.dump(data, jsonFile)
+				jsonFile.truncate()		
+		self.doneORno.setStyleSheet("color: rgb(255, 0, 0);")
+		self.doneORno.setText('task marked as Not Done') 
+		# self.notFinishedButton.setEnabled(False)
+	
 	def shadow_execute(self):
 		self.shadow(self.startButton)
 		self.shadow(self.goToMainMenuButton)
