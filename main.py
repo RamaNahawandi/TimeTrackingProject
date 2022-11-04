@@ -1,6 +1,7 @@
 import time
-import datetime
-from datetime import date
+# import datetime
+# from datetime import  date
+from datetime import datetime,timedelta,date
 from PyQt5 import QtWidgets,QtCore,QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
@@ -118,6 +119,12 @@ class MainMenuUI(QDialog):
 		loadUi("./UI/mainMenu.ui",self)
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.user_id=LoginUI.user_id
+		self.summaryTableValuesWidget.setColumnWidth(0,123)
+		self.summaryTableValuesWidget.setColumnWidth(1,150)
+		self.summaryTableValuesWidget.setColumnWidth(2,90)
+		self.summaryTableValuesWidget.setColumnWidth(3,90)
+		self.summaryTableValuesWidget.setColumnWidth(4,90)
+
 		with open('json.json', 'r') as f:
 			self.users = json.load(f)
 			self.user_dict=self.users["User"][self.user_id]
@@ -151,11 +158,9 @@ class MainMenuUI(QDialog):
 		period = self.showSummaryPeriodCombo.currentText()
 		today = date.today()
 		today_date=str(today)
-		week_ago = today - datetime.timedelta(days=7)
-		print(week_ago)
-
-		print("Today date is: ", today_date)
-		row=0
+		week=datetime.strftime(today-timedelta(days=7),"%Y-%m-%d")
+		week_ago=datetime.strptime(week, '%Y-%m-%d').date()
+		
 		dict={}
 		if project=='All':
 			for i,j in self.user_dict["projects"].items():
@@ -183,19 +188,35 @@ class MainMenuUI(QDialog):
 				dict2[i]=list
           
 		elif period=='This week':
-			pass
-        
+			for i,j in dict.items():
+				list=[]
 				
-			
-		self.summaryTableValuesWidget.setRowCount(len(self.subject1.keys()))
-		for i in self.subject1.keys():
-			self.summaryTableValuesWidget.setItem(row,1,QtWidgets.QTableWidgetItem(i))
-			row+=1
-
+				for k in j:	
+					for l,m in k.items():
+						if l=="sessions_date":
+							date_time_obj = datetime.strptime(m, '%Y-%m-%d').date()
+							if week_ago<date_time_obj<=today:
+								list.append(k)
+				dict2[i]=list
+		else:
+			dict2=dict
+		dict2
+        
+		row=0			
 		
+		for i,j in dict2.items():
+			for k in j:
+				self.summaryTableValuesWidget.setItem(row,0,QtWidgets.QTableWidgetItem(k['sessions_date']))
+				self.summaryTableValuesWidget.setItem(row,1,QtWidgets.QTableWidgetItem(i))
+				self.summaryTableValuesWidget.setItem(row,2,QtWidgets.QTableWidgetItem(k['session_startTime']))
+				self.summaryTableValuesWidget.setItem(row,3,QtWidgets.QTableWidgetItem(k['session_endTime']))
+				if k['success']:
+					self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('True'))
+				else:
+					self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
+				row+=1
 
 
-	
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()
 		subject=self.combo_sellect_subject.currentText()
@@ -391,7 +412,6 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
 		self.count = 1500
-		print('hello')
 		self.shadow_execute()
 		self.pauseButton.pressed.connect(self.pause)
 		self.startButton.pressed.connect(self.start)
