@@ -134,6 +134,14 @@ class MainMenuUI(QDialog):
 		self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
 		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
 		self.combo_set()
+		self.subject1={'task1':[{'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"30-10-2022",'session_startTime':"10:30","session_endTime":'10:40','success':False},
+                       {'date':"30-10-2022",'session_startTime':"11:40","session_endTime":'12:10','success':True}],
+              		'task2':[{'date':"22-10-2022",'session_startTime':"09:00","session_endTime":'10:10','success':False},
+                       {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"30-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"30-10-2022",'session_startTime':"10:40","session_endTime":'10:50','success':True}]}
 	
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()
@@ -356,11 +364,11 @@ class LongBreakUI(ShortBreakUI,QDialog):
 
 
 app = QApplication(sys.argv)
-UI = LoginUI() # This line determines which screen you will load at first
+# UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
 # UI = MainMenuUI()
-# UI = PomodoroUI()
+UI = PomodoroUI()
 # UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   
