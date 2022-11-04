@@ -297,8 +297,8 @@ padding:6px;
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>248</x>
-      <y>362</y>
+      <x>250</x>
+      <y>360</y>
       <width>267</width>
       <height>161</height>
      </rect>

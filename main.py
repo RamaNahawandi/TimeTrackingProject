@@ -134,6 +134,7 @@ class MainMenuUI(QDialog):
 		self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
 		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
 		self.combo_set()
+		
 		self.subject1={'task1':[{'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
                        {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
                        {'date':"30-10-2022",'session_startTime':"10:30","session_endTime":'10:40','success':False},
