@@ -134,6 +134,15 @@ class MainMenuUI(QDialog):
 		self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
 		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
 		self.combo_set()
+		
+		self.subject1={'task1':[{'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"30-10-2022",'session_startTime':"10:30","session_endTime":'10:40','success':False},
+                       {'date':"30-10-2022",'session_startTime':"11:40","session_endTime":'12:10','success':True}],
+              		'task2':[{'date':"22-10-2022",'session_startTime':"09:00","session_endTime":'10:10','success':False},
+                       {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"30-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
+                       {'date':"30-10-2022",'session_startTime':"10:40","session_endTime":'10:50','success':True}]}
 	
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()
@@ -274,15 +283,13 @@ class MainMenuUI(QDialog):
 				 
 
 class PomodoroUI(QDialog):
-	def __init__(self): 
+	def __init__(self):
 		super(PomodoroUI,self).__init__()
 		loadUi("./UI/pomodoro.ui",self)
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.user_id=LoginUI.user_id
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
-		self.addTask.clicked.connect(self.add_task)
-								
 		self.count = 1500
 		text=time.strftime('%M:%S', time.gmtime(self.count))
 		self.timeLabel.display(text)
@@ -297,16 +304,7 @@ class PomodoroUI(QDialog):
 		self.timeLabel.setGraphicsEffect(shadow)
 		self.doneButton.clicked.connect(self.go_short_break)
 
-	def add_task(self):
-		pass
-	# 	self.user_tasks=self.taskInput.text()
-	# 	with open("json.json", "r+") as jsonFile:
-	# 		data = json.load(jsonFile)   		
-	# 		data["User"][self.user_id]["projects"][self.project][self.subject]["session1"]["tasks"][self.user_tasks]
-	# 		jsonFile.seek(0)  
-	# 		json.dump(data, jsonFile)
-	# 		jsonFile.truncate()
-
+		
 	def showTime(self):
 		if self.flag:
 			self.count-= 1
@@ -333,12 +331,9 @@ class ShortBreakUI(QDialog):
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.count = 300
 		self.component()
-		
-		
 		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-		
 	
 	def component(self):
 		text=time.strftime('%M:%S', time.gmtime(self.count))
@@ -346,10 +341,13 @@ class ShortBreakUI(QDialog):
 		self.flag = False
 		self.timer = QTimer(self)
 		self.timer.start(1000)
-		shadow = QGraphicsDropShadowEffect()
-		shadow.setBlurRadius(15)
-		self.timeLabel.setGraphicsEffect(shadow)
 		self.timer.timeout.connect(self.showTime)
+  
+	def shadow_execute(self):
+		self.shadow(self.skipButton)
+		self.shadow(self.startButton)
+		self.shadow(self.goToMainMenuButton)
+		self.shadow(self.timeLabel)
   
 	def showTime(self):
 		if self.flag:
@@ -360,6 +358,11 @@ class ShortBreakUI(QDialog):
 	def start(self):
 		self.flag = True
 
+	def shadow(self,widget):
+		shadow = QGraphicsDropShadowEffect()
+		shadow.setBlurRadius(15)
+		widget.setGraphicsEffect(shadow)
+
 	def skip(self):
 		main_menu = PomodoroUI()
 		widget.addWidget(main_menu)
@@ -368,42 +371,54 @@ class ShortBreakUI(QDialog):
 	def go_main_menu(self):
 		main_menu = MainMenuUI()
 		widget.addWidget(main_menu)
-		widget.setCurrentIndex(widget.currentIndex()+1)
+		widget.setCurrentIndex(widget.currentIndex()+1)	
+				 
+
+class PomodoroUI(ShortBreakUI,QDialog):
+	def __init__(self):
+		super(PomodoroUI,self).__init__()
+		loadUi("./UI/pomodoro.ui",self)
+		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		self.user_id=LoginUI.user_id
+		self.project=MainMenuUI.project
+		self.subject=MainMenuUI.subject
+		self.count = 1500
+		self.shadow_execute()
+		self.pauseButton.pressed.connect(self.pause)
+		self.startButton.pressed.connect(self.start)
+		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
+  
+	def shadow_execute(self):
+		self.shadow(self.startButton)
+		self.shadow(self.goToMainMenuButton)
+		self.shadow(self.timeLabel)
+		self.shadow(self.pauseButton)
+		self.shadow(self.doneButton)
+		self.shadow(self.addTaskWidget)
+		self.shadow(self.notFinishedButton)
+		
+	def pause(self):
+		self.flag = False
 
 
-
-class LongBreakUI(QDialog):
+class LongBreakUI(ShortBreakUI,QDialog):
 	def __init__(self):
 		super(LongBreakUI,self).__init__()
 		loadUi("./UI/longBreak.ui",self)
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
-		self.flag=False
-		self.count = 300
-		ShortBreakUI.showTime(self)
-		ShortBreakUI.component(self)
-		self.start=ShortBreakUI.start(self)
-		print(self.start)
-		
-		# self.skipButton.pressed.connect(ShortBreakUI.skip(self))
+		self.count = 1800
+		self.shadow_execute()
+		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
-		# self.goToMainMenuButton.clicked.connect(ShortBreakUI.go_main_menu(self))
-
- 
-	def showTime(self):
-		if self.flag:
-			self.count-= 1
-		text=time.strftime('%M:%S', time.gmtime(self.count))
-		self.timeLabel.display(text)
-		
-
+		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
 
 
 app = QApplication(sys.argv)
-UI = LoginUI() # This line determines which screen you will load at first
+# UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
 # UI = MainMenuUI()
-# UI = PomodoroUI()
+UI = PomodoroUI()
 # UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   

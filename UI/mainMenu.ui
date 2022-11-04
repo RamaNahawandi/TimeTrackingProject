@@ -967,11 +967,6 @@ border-radius:10px;</string>
           </property>
           <row>
            <property name="text">
-            <string/>
-           </property>
-          </row>
-          <row>
-           <property name="text">
             <string>1</string>
            </property>
           </row>
@@ -1087,7 +1082,12 @@ border-radius:10px;</string>
           </column>
           <column>
            <property name="text">
-            <string>Starting Time</string>
+            <string>Task Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Start Time</string>
            </property>
           </column>
           <column>
@@ -1097,12 +1097,7 @@ border-radius:10px;</string>
           </column>
           <column>
            <property name="text">
-            <string>Success (Tasks)</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Failure (Tasks)</string>
+            <string>Success</string>
            </property>
           </column>
          </widget>
@@ -1468,6 +1463,9 @@ border-radius:10px;</string>
           <width>16777215</width>
           <height>15</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
          <string>Error Label</string>
