@@ -274,13 +274,15 @@ class MainMenuUI(QDialog):
 				 
 
 class PomodoroUI(QDialog):
-	def __init__(self):
+	def __init__(self): 
 		super(PomodoroUI,self).__init__()
 		loadUi("./UI/pomodoro.ui",self)
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.user_id=LoginUI.user_id
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
+		self.addTask.clicked.connect(self.add_task)
+								
 		self.count = 1500
 		text=time.strftime('%M:%S', time.gmtime(self.count))
 		self.timeLabel.display(text)
@@ -295,7 +297,16 @@ class PomodoroUI(QDialog):
 		self.timeLabel.setGraphicsEffect(shadow)
 		self.doneButton.clicked.connect(self.go_short_break)
 
-		
+	def add_task(self):
+		pass
+	# 	self.user_tasks=self.taskInput.text()
+	# 	with open("json.json", "r+") as jsonFile:
+	# 		data = json.load(jsonFile)   		
+	# 		data["User"][self.user_id]["projects"][self.project][self.subject]["session1"]["tasks"][self.user_tasks]
+	# 		jsonFile.seek(0)  
+	# 		json.dump(data, jsonFile)
+	# 		jsonFile.truncate()
+
 	def showTime(self):
 		if self.flag:
 			self.count-= 1
