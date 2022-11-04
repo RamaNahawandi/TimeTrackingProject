@@ -1,5 +1,6 @@
 import time
 import datetime
+from datetime import date
 from PyQt5 import QtWidgets,QtCore,QtGui
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
@@ -134,7 +135,7 @@ class MainMenuUI(QDialog):
 		self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
 		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
 		self.combo_set()
-		
+		self.showSummaryButton.clicked.connect(self.show_summary)
 		self.subject1={'task1':[{'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
                        {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
                        {'date':"30-10-2022",'session_startTime':"10:30","session_endTime":'10:40','success':False},
@@ -143,6 +144,59 @@ class MainMenuUI(QDialog):
                        {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
                        {'date':"30-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
                        {'date':"30-10-2022",'session_startTime':"10:40","session_endTime":'10:50','success':True}]}
+
+	def show_summary(self):
+		project = self.showSummaryProjectCombo.currentText()
+		subject = self.showSummarySubjectCombo.currentText()
+		period = self.showSummaryPeriodCombo.currentText()
+		today = date.today()
+		today_date=str(today)
+		week_ago = today - datetime.timedelta(days=7)
+		print(week_ago)
+
+		print("Today date is: ", today_date)
+		row=0
+		dict={}
+		if project=='All':
+			for i,j in self.user_dict["projects"].items():
+				for p in j.values():
+					for l,m in p.items():
+						dict[l]=m
+		else:
+			if subject=='All':
+				for i in self.user_dict["projects"][project].values():
+					for l,m in i.items():
+						dict[l]=m
+			else:
+				dict=self.user_dict["projects"][project][subject]
+
+		dict2={}
+		if period=='Today':
+			
+			for i,j in dict.items():
+				list=[]
+				
+				for k in j:	
+					for l,m in k.items():
+						if m==today_date:
+							list.append(k)
+				dict2[i]=list
+          
+		elif period=='This week':
+			pass
+        
+		
+				
+					
+			
+		self.summaryTableValuesWidget.setRowCount(len(self.subject1.keys()))
+		for i in self.subject1.keys():
+			self.summaryTableValuesWidget.setItem(row,1,QtWidgets.QTableWidgetItem(i))
+			row+=1
+
+		
+
+
 	
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()
@@ -369,11 +423,11 @@ class LongBreakUI(ShortBreakUI,QDialog):
 
 
 app = QApplication(sys.argv)
-# UI = LoginUI() # This line determines which screen you will load at first
+UI = LoginUI() # This line determines which screen you will load at first
 
 # You can also try one of other screens to see them.
 # UI = MainMenuUI()
-UI = PomodoroUI()
+# UI = PomodoroUI()
 # UI = ShortBreakUI()
 # UI = LongBreakUI()
 # this block is for make a pup.up message   
