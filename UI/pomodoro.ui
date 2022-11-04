@@ -50,7 +50,7 @@ color:rgb(255, 255, 255);</string>
       <x>170</x>
       <y>90</y>
       <width>451</width>
-      <height>91</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -189,6 +189,16 @@ font: 10pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="styleSheet">
       <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="taskMessage">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>113</width>
+       <height>22</height>
+      </rect>
      </property>
     </widget>
    </widget>
