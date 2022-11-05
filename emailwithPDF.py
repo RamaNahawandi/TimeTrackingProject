@@ -1,13 +1,19 @@
 from email import encoders
 from email.mime.application import MIMEApplication
 from email.mime.base import MIMEBase
+import json
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+with open("json.json", "r+") as jsonFile:
+    data = json.load(jsonFile)
+    receivers_list=data["User"]["rima"]["Recipents"]
+
+
 email_sender = "pycodersfenyx@gmail.com"
 email_password = "rvpqrzownkvhyvqz"
-email_receiver =  "rama_nahawandi@outlook.com"
+email_receiver =  receivers_list
 
 
 pdf= './pomodoroSummary.pdf' 
