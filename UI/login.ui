@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>591</height>
+    <width>792</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Widget</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(133, 92, 119);</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="leftSide" native="true">
    <property name="geometry">
@@ -48,10 +48,10 @@ border-right-color: rgb(27, 0, 21);
     <widget class="QLabel" name="image">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>401</width>
-       <height>441</height>
+       <x>14</x>
+       <y>42</y>
+       <width>375</width>
+       <height>357</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -72,16 +72,16 @@ background-color: rgb(255, 66, 58);</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>351</width>
-      <height>121</height>
+      <x>30</x>
+      <y>54</y>
+      <width>333</width>
+      <height>109</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(126, 221, 194);
 color:rgb(0,0,0);
-border-radius:60px;
+border-radius:20px;
 </string>
     </property>
     <widget class="QLabel" name="timeTrackingText">
@@ -119,7 +119,7 @@ border-radius:60px;
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(252, 222, 164);</string>
+    <string notr="true"/>
    </property>
    <widget class="QWidget" name="signUpWidget" native="true">
     <property name="enabled">
@@ -127,37 +127,46 @@ border-radius:60px;
     </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>301</y>
-      <width>380</width>
-      <height>289</height>
+      <x>18</x>
+      <y>286</y>
+      <width>361</width>
+      <height>279</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(125, 193, 83);
+     <string notr="true">
+background-color: rgb(100, 200, 100);
+
 color:rgb(255,255,255);
-border-radius:60px;
+border-radius:15px;
 </string>
     </property>
     <widget class="QPushButton" name="signUpButton">
      <property name="geometry">
       <rect>
-       <x>114</x>
-       <y>238</y>
-       <width>149</width>
-       <height>47</height>
+       <x>116</x>
+       <y>230</y>
+       <width>133</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
-       <pointsize>20</pointsize>
+       <family>Palatino Linotype</family>
+       <pointsize>15</pointsize>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(0, 0, 0);
+      <string notr="true">background-color: rgb(100, 200, 100);
+
+border-style:outset;
+border-width:2px;
 border-radius:10px;
-color:rgb(255, 255, 255);</string>
+border-color:white;
+</string>
      </property>
      <property name="text">
       <string>Sign Up</string>
@@ -174,7 +183,7 @@ color:rgb(255, 255, 255);</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(217, 217, 217, 66);
-border-radius:10px;
+border-radius:3px;
 </string>
      </property>
      <property name="text">
@@ -216,7 +225,7 @@ border-radius:10px;
      <property name="font">
       <font>
        <family>Chalkboard</family>
-       <pointsize>19</pointsize>
+       <pointsize>18</pointsize>
        <underline>false</underline>
       </font>
      </property>
@@ -278,7 +287,7 @@ color:red;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(217, 217, 217, 66);
-border-radius:10px;
+border-radius:2px;
 </string>
      </property>
      <property name="text">
@@ -296,7 +305,7 @@ border-radius:10px;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(217, 217, 217, 66);
-border-radius:10px;
+border-radius:3px;
 </string>
      </property>
      <property name="text">
@@ -314,7 +323,7 @@ border-radius:10px;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(217, 217, 217, 66);
-border-radius:10px;
+border-radius:3px;
 </string>
      </property>
      <property name="text">
@@ -374,37 +383,43 @@ border-radius:10px;
     </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>16</x>
       <y>10</y>
-      <width>380</width>
-      <height>280</height>
+      <width>363</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color:rgb(255, 96, 86);
 color:rgb(255,255,255);
-border-radius:60px;
+border-radius:15px;
 </string>
     </property>
     <widget class="QPushButton" name="loginButton">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>220</y>
+       <x>132</x>
+       <y>196</y>
        <width>101</width>
        <height>45</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Chalkboard</family>
-       <pointsize>20</pointsize>
+       <family>Palatino Linotype</family>
+       <pointsize>15</pointsize>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:rgb(0, 0, 0);
+      <string notr="true">background-color:rgb(255, 96, 86);
+border-style:outset;
+border-width:2px;
 border-radius:10px;
-color:rgb(255, 255, 255);</string>
+border-color:white;
+</string>
      </property>
      <property name="text">
       <string>Login</string>
@@ -415,13 +430,13 @@ color:rgb(255, 255, 255);</string>
       <rect>
        <x>42</x>
        <y>84</y>
-       <width>311</width>
+       <width>299</width>
        <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(217, 217, 217, 66);
-border-radius:10px;
+border-radius:3px;
 </string>
      </property>
      <property name="text">
@@ -463,7 +478,7 @@ border-radius:10px;
      <property name="font">
       <font>
        <family>Chalkboard</family>
-       <pointsize>25</pointsize>
+       <pointsize>23</pointsize>
        <underline>false</underline>
       </font>
      </property>
@@ -477,8 +492,8 @@ border-radius:10px;
     <widget class="QLineEdit" name="errorTextLogin">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>180</y>
+       <x>46</x>
+       <y>176</y>
        <width>301</width>
        <height>21</height>
       </rect>
@@ -519,13 +534,13 @@ color:black;</string>
       <rect>
        <x>42</x>
        <y>144</y>
-       <width>311</width>
+       <width>301</width>
        <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgba(217, 217, 217, 66);
-border-radius:10px;
+border-radius:2px;
 </string>
      </property>
      <property name="text">
