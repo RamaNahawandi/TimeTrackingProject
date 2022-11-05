@@ -392,7 +392,6 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		with open('json.json', 'r') as jsonFile:
 			data = json.load(jsonFile)
 			self.task_dict=data["User"][self.user_id]["projects"][self.project][self.subject]
-
 		for i in self.task_dict:
 			self.tasksCombo.addItem(i)
 			
@@ -400,9 +399,9 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.count = 1500
 		print('hello')
 		self.shadow_execute()
-		self.pauseButton.pressed.connect(self.pause)
-		self.startButton.pressed.connect(self.start)
 		self.addTask.clicked.connect(self.addingTask)
+		self.pauseButton.pressed.connect(self.Pomodoropause)
+		self.startButton.pressed.connect(self.Pomodorostart)
 		self.doneButton.clicked.connect(self.done)
 		self.notFinishedButton.clicked.connect(self.notFinished)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
@@ -422,15 +421,26 @@ class PomodoroUI(ShortBreakUI,QDialog):
 				jsonFile.seek(0)  
 				json.dump(data, jsonFile)
 				jsonFile.truncate()
- 
 			self.taskMessage.setStyleSheet("color: rgb(0, 255, 0);")
 			self.taskMessage.setText('This task is added')  
 
+
+
 	def done(self):		
+		self.flag = False
 		with open("json.json", "r+") as jsonFile:
 				data = json.load(jsonFile)
 				self.task_input=self.tasksCombo.currentText()
-				self.task_dict[self.task_input].append({ "success": True})
+				current_time = time.strftime("%H:%M", time.localtime())
+				session_dict= {"session_endTime":current_time, "success": True}
+				tasklist=self.task_dict[self.task_input]
+				if tasklist: #list is not empty
+					for session in tasklist:
+						session["session_endTime"]=current_time
+						session["success"]=True
+						break
+				else: #list is empty
+					tasklist.append(session_dict)
 				data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
 				jsonFile.seek(0)  
 				json.dump(data, jsonFile)
@@ -442,17 +452,26 @@ class PomodoroUI(ShortBreakUI,QDialog):
 
 
 	def notFinished(self):
+		self.flag = False
 		with open("json.json", "r+") as jsonFile:
-				data = json.load(jsonFile)
-				self.task_input=self.tasksCombo.currentText()
-				self.task_dict[self.task_input].append({ "success": False})
-				data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
-				jsonFile.seek(0)  
-				json.dump(data, jsonFile)
-				jsonFile.truncate()		
+			data = json.load(jsonFile)
+			self.task_input=self.tasksCombo.currentText()
+			current_time = time.strftime("%H:%M", time.localtime())
+			session_dict= {"session_endTime":current_time, "success": False} 
+			tasklist=self.task_dict[self.task_input]				
+			if tasklist: #list is not empty
+				for session in tasklist:
+					session["session_endTime"]=current_time
+					session["success"]=False
+					break
+			else: #list is empty
+				tasklist.append(session_dict)
+			data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
+			jsonFile.seek(0)  
+			json.dump(data, jsonFile)
+			jsonFile.truncate()		
 		self.doneORno.setStyleSheet("color: rgb(255, 0, 0);")
-		self.doneORno.setText('task marked as Not Done') 
-		# self.notFinishedButton.setEnabled(False)
+		self.doneORno.setText('task marked as Not done') 
 	
 	def shadow_execute(self):
 		self.shadow(self.startButton)
@@ -463,8 +482,29 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.shadow(self.addTaskWidget)
 		self.shadow(self.notFinishedButton)
 		
-	def pause(self):
+	def Pomodoropause(self):
 		self.flag = False
+
+ 
+	def Pomodorostart(self):
+		self.flag = True
+		with open("json.json", "r+") as jsonFile:
+			data = json.load(jsonFile)
+			self.task_input=self.tasksCombo.currentText()
+			current_time = time.strftime("%H:%M", time.localtime())
+			today_date = date.today().strftime("%d-%m-%Y")
+			time_dict= {"session_startTime":current_time,"session_date":today_date }
+			tasklist=self.task_dict[self.task_input]
+			if tasklist: #list is not empty
+					#tasklist.append(session_dict)
+					tasklist.insert(-1, time_dict)
+
+			else: #list is empty
+				tasklist.append(time_dict)
+			data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
+			jsonFile.seek(0)  
+			json.dump(data, jsonFile)
+			jsonFile.truncate()	
 
 
 class LongBreakUI(ShortBreakUI,QDialog):
