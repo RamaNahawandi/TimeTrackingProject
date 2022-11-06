@@ -157,7 +157,12 @@ class MainMenuUI(QDialog):
 		self.combo_set()
 		self.showSummaryButton.clicked.connect(self.show_summary)
 		self.subject1={}
+		self.history_dict={}
+  
+
 	def show_summary(self):
+		self.summaryTableValuesWidget.setRowCount(0)
+		self.summaryTableValuesWidget.setRowCount(100)
 		project = self.showSummaryProjectCombo.currentText()
 		subject = self.showSummarySubjectCombo.currentText()
 		period = self.showSummaryPeriodCombo.currentText()
@@ -165,20 +170,28 @@ class MainMenuUI(QDialog):
 		today_date=str(today)
 		week=datetime.strftime(today-timedelta(days=7),"%Y-%m-%d")
 		week_ago=datetime.strptime(week, '%Y-%m-%d').date()
+		text="00:10"
+		self.total_time= datetime.strptime(text,"%M:%S")
+
 		
 		dict={}
 		if project=='All':
+			
 			for i,j in self.user_dict["projects"].items():
 				for p in j.values():
-					for l,m in p.items():
-						dict[l]=m
+					for k,l in p.items():
+						dict[k]=l
+		
+							
 		else:
 			if subject=='All':
 				for i in self.user_dict["projects"][project].values():
 					for l,m in i.items():
 						dict[l]=m
+				
 			else:
 				dict=self.user_dict["projects"][project][subject]
+		
 
 		dict2={}
 		if period=='Today':
@@ -198,29 +211,42 @@ class MainMenuUI(QDialog):
 				
 				for k in j:	
 					for l,m in k.items():
-						if l=="sessions_date":
+						if l=="session_date":
 							date_time_obj = datetime.strptime(m, '%Y-%m-%d').date()
 							if week_ago<date_time_obj<=today:
 								list.append(k)
 				dict2[i]=list
 		else:
 			dict2=dict
-		dict2
+		a=0
+		for i in dict2.values():
+			for j in i:
+				(h, m, s) = j['study_time'].split(':')
+				result = int(h) * 3600 + int(m) * 60 + int(s)
+				a+=result
+		self.total_time=time.strftime('%H:%M:%S', time.gmtime(a))
+		self.totalTrackedTimeTextLabel.setText(self.total_time)
         
 		row=0			
 		
 		for i,j in dict2.items():
 			for k in j:
-				self.summaryTableValuesWidget.setItem(row,0,QtWidgets.QTableWidgetItem(k['sessions_date']))
-				self.summaryTableValuesWidget.setItem(row,1,QtWidgets.QTableWidgetItem(i))
-				self.summaryTableValuesWidget.setItem(row,2,QtWidgets.QTableWidgetItem(k['session_startTime']))
-				self.summaryTableValuesWidget.setItem(row,3,QtWidgets.QTableWidgetItem(k['session_endTime']))
-				if k['success']:
-					self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('True'))
-				else:
-					self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
-				row+=1
+					self.summaryTableValuesWidget.setItem(row,0,QtWidgets.QTableWidgetItem(str(k['session_date'])))
+					self.summaryTableValuesWidget.setItem(row,1,QtWidgets.QTableWidgetItem(i))
+					self.summaryTableValuesWidget.setItem(row,2,QtWidgets.QTableWidgetItem(k['session_startTime']))
+					self.summaryTableValuesWidget.setItem(row,3,QtWidgets.QTableWidgetItem(k['session_endTime']))
+					if k['success']:
+						self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('True'))
+					else:
+						self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
+					row+=1
+		self.history_dict=dict2.copy()
+		self.history_dict['User_id']=self.user_id
+		self.history_dict['Total_study_time']=self.total_time
+		with open(f'{self.user_id}history.json', 'w') as f:
+			json.dump(self.history_dict, f)
 
+			
 
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()
@@ -266,8 +292,7 @@ class MainMenuUI(QDialog):
 			self.user_dict["projects"][project][subject]={}
 			self.errorTextSubjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
 			self.errorTextSubjectLabel.setText('This subject is added')
-			   
-		
+			   	
 	def show_subject_history(self):
 		content = self.showSummaryProjectCombo.currentText()
 		self.showSummarySubjectCombo.clear()
@@ -279,8 +304,7 @@ class MainMenuUI(QDialog):
 				self.showSummarySubjectCombo.addItem("All")
 			else:
 				self.showSummarySubjectCombo.addItem("All")
-
-			   
+		   
 	def show_subject_pomodoro(self):
 		content = self.combo_sellect_project.currentText()
 		self.combo_sellect_subject.clear()
@@ -346,7 +370,6 @@ class MainMenuUI(QDialog):
 		self.combo_sellect_project.removeItem(index)
 		index=self.showSummaryProjectCombo.findText(content)
 		self.showSummaryProjectCombo.removeItem(index)
-			
 		
 	def delete_subject(self):
 		content1 = self.sellectProjectComboDeleteSubject.currentText()
@@ -364,14 +387,17 @@ class ShortBreakUI(QDialog):
 		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.count = 300
 		self.component()
+		self.check=0
+		self.startButton.setText('Pause')
 		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
+		self.shadow_execute()
 	
 	def component(self):
 		text=time.strftime('%M:%S', time.gmtime(self.count))
 		self.timeLabel.display(text)
-		self.flag = False
+		self.flag = True
 		self.timer = QTimer(self)
 		self.timer.start(1000)
 		self.timer.timeout.connect(self.showTime)
@@ -389,8 +415,14 @@ class ShortBreakUI(QDialog):
 		self.timeLabel.display(text)
   
 	def start(self):
-		self.flag = True
-		
+		self.check +=1
+		if self.check % 2!=0:
+			self.flag= False
+			self.startButton.setText('Start')
+		else:
+			self.flag= True
+			self.startButton.setText('Pause')
+
 	def shadow(self,widget):
 		shadow = QGraphicsDropShadowEffect()
 		shadow.setBlurRadius(15)
@@ -408,6 +440,7 @@ class ShortBreakUI(QDialog):
 				 
 
 class PomodoroUI(ShortBreakUI,QDialog):
+	session_number=1
 	def __init__(self):
 		super(PomodoroUI,self).__init__()
 		loadUi("./UI/pomodoro.ui",self)
@@ -418,25 +451,106 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		with open('json.json', 'r') as jsonFile:
 			data = json.load(jsonFile)
 			self.task_dict=data["User"][self.user_id]["projects"][self.project][self.subject]
-		for i in self.task_dict:
-			self.tasksCombo.addItem(i)
-			
-		self.doneORno.setText('')
-		self.count = 1500
-		self.shadow_execute()
+		self.flag = False
+		self.taskComboEdit()
+		self.session_date=''
+		self.session_startTime=''	
+		self.count = 5
+		self.shadow_pomodoro_execute()
 		self.addTask.clicked.connect(self.addingTask)
 		self.pauseButton.pressed.connect(self.Pomodoropause)
 		self.startButton.pressed.connect(self.Pomodorostart)
 		self.doneButton.clicked.connect(self.done)
 		self.notFinishedButton.clicked.connect(self.notFinished)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
+		self.control_time=1500
+		self.numberOfSession.setText(str(PomodoroUI.session_number))
+		self.tableWidget.horizontalHeader().setStyleSheet(
+            "QHeaderView::section{"
+            "border-bottom: 1px solid #4a4848;"
+            "background-color:rgb(203, 34, 79);"
+        "}")
+		self.tableWidget.verticalHeader().setStyleSheet(
+            "QHeaderView::section{"
+            "border-bottom: 1px solid #4a4848;"
+            "background-color:rgb(203, 34, 79);"
+        "}")
+		self.tableWidget.setColumnWidth(0,150)
+		self.tableWidget.setColumnWidth(1,70)
+		self.tableWidget.setLineWidth(70)
+		
+
+
+	def taskComboEdit(self):
+		list=[]
+		row=0
+		self.tasksCombo.clear()
+		for i in self.task_dict:
+			row+=1
+			if len(self.task_dict[i])>0:
+				for j in self.task_dict[i]:
+					for k,l in j.items():
+						if k=='success':
+							if l==True:
+								if i in list:
+									list.remove(i)
+							else:
+									if i not in list:										
+										list.append(i)							
+			else:
+				if i not in list:
+					list.append(i)
 	
+		for i in list:
+			self.tasksCombo.addItem(i)
+		row=0
+		self.tableWidget.setRowCount(len(self.task_dict.keys()))
+		for i,j in self.task_dict.items():
+			self.tableWidget.setItem(row,0,QtWidgets.QTableWidgetItem(i))
+			if len(j)==0:
+				self.tableWidget.setItem(row,1,QtWidgets.QTableWidgetItem("False"))	
+			else:	
+				for k in j:
+					for l,m in k.items():
+						if l=='success':
+							self.tableWidget.setItem(row,1,QtWidgets.QTableWidgetItem(str(m)))
+			row+=1
+
+
+	def showTime(self):
+		if self.flag:
+			self.count-= 1
+		text=time.strftime('%M:%S', time.gmtime(self.count))
+		self.timeLabel.display(text)
+		if self.count==0:
+			self.flag=False
+			self.count=5
+			self.notFinished()
+			if PomodoroUI.session_number==4:
+				PomodoroUI.session_number=1
+				main_menu = LongBreakUI()
+				widget.addWidget(main_menu)
+				widget.setCurrentIndex(widget.currentIndex()+1)
+			else:
+				PomodoroUI.session_number+=1
+				main_menu = ShortBreakUI()
+				widget.addWidget(main_menu)
+				widget.setCurrentIndex(widget.currentIndex()+1)	
 
 	def addingTask(self):
 		task_input = self.taskInput.text()
 		if task_input in self.task_dict:
 			self.taskMessage.setStyleSheet("color: rgb(255, 0, 0);")
-			self.taskMessage.setText('This task already exists')
+			if len(self.task_dict[task_input])>0:
+				for i in self.task_dict[task_input]:
+					for k,l in i.items():
+						if k=='success':
+							if l==True:
+								self.taskMessage.setText('This task already completed, choose another task')
+							else:			
+								self.taskMessage.setText('This task already exists')
+			else:
+				self.taskMessage.setText('This task already exists')
 		else:
 			self.tasksCombo.addItem(task_input)
 			with open("json.json", "r+") as jsonFile:
@@ -447,34 +561,39 @@ class PomodoroUI(ShortBreakUI,QDialog):
 				json.dump(data, jsonFile)
 				jsonFile.truncate()
 			self.taskMessage.setStyleSheet("color: rgb(0, 255, 0);")
-			self.taskMessage.setText('This task is added')  
-
-
+			self.taskMessage.setText('This task is added')
+		self.taskComboEdit()
 
 	def done(self):		
 		self.flag = False
+		
 		with open("json.json", "r+") as jsonFile:
 				data = json.load(jsonFile)
 				self.task_input=self.tasksCombo.currentText()
 				current_time = time.strftime("%H:%M", time.localtime())
-				session_dict= {"session_endTime":current_time, "success": True}
-				tasklist=self.task_dict[self.task_input]
-				if tasklist: #list is not empty
-					for session in tasklist:
-						session["session_endTime"]=current_time
-						session["success"]=True
-						break
-				else: #list is empty
-					tasklist.append(session_dict)
-				data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
+				text1=time.strftime('%M:%S', time.gmtime(self.control_time))
+				text2=time.strftime('%M:%S', time.gmtime(self.count))
+				self.control_time-=self.control_time-self.count
+				time1 = datetime.strptime(text1,"%M:%S")
+				time2 = datetime.strptime(text2,"%M:%S")
+				study_time=time1-time2
+				session_dict= {"session_date":self.session_date,"session_startTime":self.session_startTime,"session_endTime":current_time,"study_time":str(study_time), "success": True}
+				task_list=data["User"][self.user_id]["projects"][self.project][self.subject][self.task_input]
+				task_list.append(session_dict)
+				self.task_dict[self.task_input].append(session_dict)
+				data["User"][self.user_id]["projects"][self.project][self.subject][self.task_input]=task_list
 				jsonFile.seek(0)  
 				json.dump(data, jsonFile)
 				jsonFile.truncate()		
-		self.doneORno.setStyleSheet("color: rgb(0, 255, 0);")
-		self.doneORno.setText('task marked as Done') 
-		# self.doneButton.setEnabled(False)
-
-
+		self.taskMessage.setStyleSheet("color: rgb(0, 255, 0);")
+		self.taskMessage.setText('task marked as Done')
+		index = self.tasksCombo.findText(self.task_input)
+		self.tasksCombo.removeItem(index) 
+		self.messagebox=QtWidgets.QMessageBox()
+		self.messagebox.setText(f"Choose another task please")
+		self.messagebox.setWindowTitle('Task done')
+		self.messagebox.exec_()
+		self.taskComboEdit()
 
 	def notFinished(self):
 		self.flag = False
@@ -482,23 +601,25 @@ class PomodoroUI(ShortBreakUI,QDialog):
 			data = json.load(jsonFile)
 			self.task_input=self.tasksCombo.currentText()
 			current_time = time.strftime("%H:%M", time.localtime())
-			session_dict= {"session_endTime":current_time, "success": False} 
-			tasklist=self.task_dict[self.task_input]				
-			if tasklist: #list is not empty
-				for session in tasklist:
-					session["session_endTime"]=current_time
-					session["success"]=False
-					break
-			else: #list is empty
-				tasklist.append(session_dict)
-			data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
+			text1=time.strftime('%M:%S', time.gmtime(self.control_time))
+			text2=time.strftime('%M:%S', time.gmtime(self.count))
+			self.control_time-=self.control_time-self.count
+			time1 = datetime.strptime(text1,"%M:%S")
+			time2 = datetime.strptime(text2,"%M:%S")
+			study_time=time1-time2
+			session_dict= {"session_date":self.session_date,"session_startTime":self.session_startTime,"session_endTime":current_time,"study_time":str(study_time), "success": False}
+			task_list=data["User"][self.user_id]["projects"][self.project][self.subject][self.task_input]
+			task_list.append(session_dict)
+			self.task_dict[self.task_input].append(session_dict)
+			data["User"][self.user_id]["projects"][self.project][self.subject][self.task_input]=task_list
 			jsonFile.seek(0)  
 			json.dump(data, jsonFile)
 			jsonFile.truncate()		
-		self.doneORno.setStyleSheet("color: rgb(255, 0, 0);")
-		self.doneORno.setText('task marked as Not done') 
+		self.taskMessage.setStyleSheet("color: rgb(0, 0, 0);")
+		self.taskMessage.setText('task marked as Not done')
+		self.taskComboEdit()
 	
-	def shadow_execute(self):
+	def shadow_pomodoro_execute(self):
 		self.shadow(self.startButton)
 		self.shadow(self.goToMainMenuButton)
 		self.shadow(self.timeLabel)
@@ -506,6 +627,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.shadow(self.doneButton)
 		self.shadow(self.addTaskWidget)
 		self.shadow(self.notFinishedButton)
+		self.shadow(self.tableWidget)
 		
 	def Pomodoropause(self):
 		self.flag = False
@@ -513,24 +635,9 @@ class PomodoroUI(ShortBreakUI,QDialog):
  
 	def Pomodorostart(self):
 		self.flag = True
-		with open("json.json", "r+") as jsonFile:
-			data = json.load(jsonFile)
-			self.task_input=self.tasksCombo.currentText()
-			current_time = time.strftime("%H:%M", time.localtime())
-			today_date = date.today().strftime("%d-%m-%Y")
-			time_dict= {"session_startTime":current_time,"session_date":today_date }
-			tasklist=self.task_dict[self.task_input]
-			if tasklist: #list is not empty
-					#tasklist.append(session_dict)
-					tasklist.insert(-1, time_dict)
-
-			else: #list is empty
-				tasklist.append(time_dict)
-			data["User"][self.user_id]["projects"][self.project][self.subject]=self.task_dict
-			jsonFile.seek(0)  
-			json.dump(data, jsonFile)
-			jsonFile.truncate()	
-
+		if len(self.session_startTime)==0:
+			self.session_startTime = time.strftime("%H:%M", time.localtime())
+			self.session_date = date.today().strftime("%Y-%m-%d")
 
 class LongBreakUI(ShortBreakUI,QDialog):
 	def __init__(self):

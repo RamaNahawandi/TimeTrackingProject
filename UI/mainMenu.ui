@@ -891,6 +891,12 @@ border-radius:10px;</string>
            </item>
            <item>
             <widget class="QLabel" name="totalTrackedTimeTextLabel">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <pointsize>11</pointsize>
