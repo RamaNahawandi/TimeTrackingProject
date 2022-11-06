@@ -7,11 +7,14 @@ from PyQt5.QtCore import QTime, QTimer
 import sys
 import json
 from email_validator import validate_email, EmailNotValidError
-
-
 from passlib.context import CryptContext
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
+
+
+from creatingHTMLTable import createhtmltable
+from emailwithPDF import send_email
+from pdf import make_pdf
 
 
 #the 2 if are to solve the small ui problem
@@ -154,9 +157,19 @@ class MainMenuUI(QDialog):
 		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
 		self.combo_set()
 		self.showSummaryButton.clicked.connect(self.show_summary)
+		self.sendEmailThisSummaryButton.clicked.connect(self.create_sendemail)
 		self.subject1={}
 		self.history_dict={}
-  
+	
+	def create_sendemail(self):
+		createhtmltable()
+		print("*please wait, now trying to make pdf...\nthis may takes 2 to 3 minutes")
+		make_pdf()
+		print("*please wait, now trying to send email...\nthis may takes 1  minute ")
+		send_email(self)
+
+
+
 
 	def show_summary(self):
 		self.summaryTableValuesWidget.setRowCount(0)
