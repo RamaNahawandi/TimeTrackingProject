@@ -233,7 +233,6 @@ class MainMenuUI(QDialog):
 					else:
 						self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
 					row+=1
-		# self.history_dict=dict2.copy()
 		self.history_dict['User_id']=self.user_id
 		self.history_dict['User_name']=self.user_dict["userName"]
 		project_list=[]
@@ -393,7 +392,7 @@ class ShortBreakUI(QDialog):
 	def __init__(self):
 		super(ShortBreakUI,self).__init__()
 		loadUi("./UI/shortBreak.ui",self)
-		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.count = 300
 		self.component()
 		self.check=0
@@ -453,7 +452,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 	def __init__(self):
 		super(PomodoroUI,self).__init__()
 		loadUi("./UI/pomodoro.ui",self)
-		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.user_id=LoginUI.user_id
 		self.project=MainMenuUI.project
 		self.subject=MainMenuUI.subject
@@ -652,7 +651,8 @@ class LongBreakUI(ShortBreakUI,QDialog):
 	def __init__(self):
 		super(LongBreakUI,self).__init__()
 		loadUi("./UI/longBreak.ui",self)
-		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		self.startButton.setText('Pause')
 		self.count = 1800
 		self.shadow_execute()
 		self.skipButton.pressed.connect(self.skip)
