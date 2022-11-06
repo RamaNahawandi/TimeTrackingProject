@@ -10,25 +10,27 @@ with open("json.json", "r+") as jsonFile:
     data = json.load(jsonFile)
     receivers_list=data["User"]["rima"]["Recipents"]
 
-
 email_sender = "pycodersfenyx@gmail.com"
 email_password = "rvpqrzownkvhyvqz"
 email_receiver =  receivers_list
 
 
-pdf= './pomodoroSummary.pdf' 
-pdfAttachment = MIMEApplication(pdf, _subtype = "pdf")
-pdfAttachment.add_header('content-disposition', 'attachment', filename = ('utf-8', '', 'pomodoroSummary.pdf'))
-text = MIMEMultipart('alternative')
-text.attach(MIMEText("Some plain text", "plain", _charset="utf-8"))
-html = open("design.html")
-text.attach(MIMEText(html.read(), 'html'))
+
+with open('pomodoroSummary.pdf' , "rb") as pdf:
+    pdfAttachment = MIMEApplication(pdf.read(),_subtype="pdf")
+    pdfAttachment.add_header('Content-Disposition','attachment',filename=str(pdf))
+
+    text = MIMEMultipart('alternative')
+    text.attach(MIMEText("Some plain text", "plain", _charset="utf-8"))
+    html = open("design.html")
+    text.attach(MIMEText(html.read(), 'html'))
  
 
 message = MIMEMultipart('mixed')
 message.attach(text)
 message.attach(pdfAttachment)
-message['Subject'] = 'Subject Subject Subject'
+message['Subject'] = 'Pomodoro Session Summary'
+#I dont know the use of these 3 lines to be honest
 f = open("message.msg", "wb")
 f.write(bytes(message.as_string(), 'utf-8'))
 f.close()
