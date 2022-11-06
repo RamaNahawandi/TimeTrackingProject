@@ -128,7 +128,7 @@ class MainMenuUI(QDialog):
 	def __init__(self):
 		super(MainMenuUI,self).__init__()
 		loadUi("./UI/mainMenu.ui",self)
-		# widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
+		widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.user_id=LoginUI.user_id
 		self.summaryTableValuesWidget.setColumnWidth(0,123)
 		self.summaryTableValuesWidget.setColumnWidth(1,150)
@@ -209,6 +209,7 @@ class MainMenuUI(QDialog):
 							if week_ago<date_time_obj<=today:
 								list.append(k)
 				dict2[i]=list
+		
 		else:
 			dict2=dict
 		a=0
@@ -232,7 +233,7 @@ class MainMenuUI(QDialog):
 					else:
 						self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
 					row+=1
-		self.history_dict=dict2.copy()
+		# self.history_dict=dict2.copy()
 		self.history_dict['User_id']=self.user_id
 		self.history_dict['User_name']=self.user_dict["userName"]
 		project_list=[]
@@ -249,15 +250,12 @@ class MainMenuUI(QDialog):
 					subject_list.append(i)
 			else:
 				subject_list.append(subject)
-		print(subject_list)
-		print(project_list)		
 		self.history_dict['project']=project_list
 		self.history_dict['subject']=subject_list
 		self.history_dict['Total_study_time']=self.total_time
-		with open(f'{self.user_id}history.json', 'w') as f:
+		self.history_dict['tasks']=dict2
+		with open('history.json', 'w') as f:
 			json.dump(self.history_dict, f)
-
-			
 
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()
