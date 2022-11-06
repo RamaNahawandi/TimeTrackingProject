@@ -156,15 +156,7 @@ class MainMenuUI(QDialog):
 		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
 		self.combo_set()
 		self.showSummaryButton.clicked.connect(self.show_summary)
-		self.subject1={'task1':[{'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
-                       {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
-                       {'date':"30-10-2022",'session_startTime':"10:30","session_endTime":'10:40','success':False},
-                       {'date':"30-10-2022",'session_startTime':"11:40","session_endTime":'12:10','success':True}],
-              		'task2':[{'date':"22-10-2022",'session_startTime':"09:00","session_endTime":'10:10','success':False},
-                       {'date':"24-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
-                       {'date':"30-10-2022",'session_startTime':"10:00","session_endTime":'10:10','success':False},
-                       {'date':"30-10-2022",'session_startTime':"10:40","session_endTime":'10:50','success':True}]}
-
+		self.subject1={}
 	def show_summary(self):
 		project = self.showSummaryProjectCombo.currentText()
 		subject = self.showSummarySubjectCombo.currentText()
