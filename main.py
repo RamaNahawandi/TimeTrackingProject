@@ -172,17 +172,14 @@ class MainMenuUI(QDialog):
 		week_ago=datetime.strptime(week, '%Y-%m-%d').date()
 		text="00:10"
 		self.total_time= datetime.strptime(text,"%M:%S")
-
-		
+	
 		dict={}
-		if project=='All':
-			
+		if project=='All':	
 			for i,j in self.user_dict["projects"].items():
 				for p in j.values():
 					for k,l in p.items():
 						dict[k]=l
-		
-							
+					
 		else:
 			if subject=='All':
 				for i in self.user_dict["projects"][project].values():
@@ -192,10 +189,8 @@ class MainMenuUI(QDialog):
 			else:
 				dict=self.user_dict["projects"][project][subject]
 		
-
 		dict2={}
-		if period=='Today':
-			
+		if period=='Today':	
 			for i,j in dict.items():
 				list=[]
 				
@@ -227,8 +222,7 @@ class MainMenuUI(QDialog):
 		self.total_time=time.strftime('%H:%M:%S', time.gmtime(a))
 		self.totalTrackedTimeTextLabel.setText(self.total_time)
         
-		row=0			
-		
+		row=0				
 		for i,j in dict2.items():
 			for k in j:
 					self.summaryTableValuesWidget.setItem(row,0,QtWidgets.QTableWidgetItem(str(k['session_date'])))
@@ -242,6 +236,25 @@ class MainMenuUI(QDialog):
 					row+=1
 		self.history_dict=dict2.copy()
 		self.history_dict['User_id']=self.user_id
+		self.history_dict['User_name']=self.user_dict["userName"]
+		project_list=[]
+		subject_list=[]
+		if project=='All':
+			project_list.extend(self.user_dict["projects"].keys())
+			for i in self.user_dict["projects"].values():
+				for j in i.keys():
+					subject_list.append(j)
+		else:
+			project_list.append(project)
+			if subject=='All':
+				for i in self.user_dict["projects"][project].keys():
+					subject_list.append(i)
+			else:
+				subject_list.append(subject)
+		print(subject_list)
+		print(project_list)		
+		self.history_dict['project']=project_list
+		self.history_dict['subject']=subject_list
 		self.history_dict['Total_study_time']=self.total_time
 		with open(f'{self.user_id}history.json', 'w') as f:
 			json.dump(self.history_dict, f)

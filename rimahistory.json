@@ -43,5 +43,16 @@
         }
     ],
     "User_id": "rima",
+    "User_name": "rima",
+    "project": [
+        "project1Math",
+        "history"
+    ],
+    "subject": [
+        "subject1 Addition",
+        "sub",
+        "america",
+        "europe"
+    ],
     "Total_study_time": "01:35:00"
 }
