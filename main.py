@@ -1,6 +1,4 @@
 import time
-# import datetime
-# from datetime import  date
 from datetime import datetime,timedelta,date
 from PyQt5 import QtWidgets,QtCore,QtGui
 from PyQt5.QtWidgets import *
