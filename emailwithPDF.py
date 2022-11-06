@@ -18,7 +18,7 @@ email_receiver =  receivers_list
 
 with open('pomodoroSummary.pdf' , "rb") as pdf:
     pdfAttachment = MIMEApplication(pdf.read(),_subtype="pdf")
-    pdfAttachment.add_header('Content-Disposition','attachment',filename=str(pdf))
+    pdfAttachment.add_header('Content-Disposition','attachment',filename = ('utf-8', '', 'pomodoroSummary.pdf'))
 
     text = MIMEMultipart('alternative')
     text.attach(MIMEText("Some plain text", "plain", _charset="utf-8"))
@@ -31,9 +31,9 @@ message.attach(text)
 message.attach(pdfAttachment)
 message['Subject'] = 'Pomodoro Session Summary'
 #I dont know the use of these 3 lines to be honest
-f = open("message.msg", "wb")
-f.write(bytes(message.as_string(), 'utf-8'))
-f.close()
+# f = open("message.msg", "wb")
+# f.write(bytes(message.as_string(), 'utf-8'))
+# f.close()
 
 
 server = smtplib.SMTP('smtp.gmail.com', 587 )
