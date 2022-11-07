@@ -12,9 +12,9 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
 
 
-from creatingHTMLTable import createhtmltable
+
 from emailwithPDF import send_email
-from pdf import make_pdf
+
 
 
 #the 2 if are to solve the small ui problem
@@ -138,6 +138,22 @@ class MainMenuUI(QDialog):
 		self.summaryTableValuesWidget.setColumnWidth(2,90)
 		self.summaryTableValuesWidget.setColumnWidth(3,90)
 		self.summaryTableValuesWidget.setColumnWidth(4,90)
+		self.summaryTableValuesWidget.horizontalHeader().setStyleSheet(
+            "QHeaderView::section{"
+            "border-bottom: 1px solid #4a4848;"
+            "background-color:rgb(0, 255, 255);"
+        "}")
+		# self.summaryTableValuesWidget.setCornerButtonEnabled(True)
+		self.summaryTableValuesWidget.setStyleSheet(" QTableCornerButton::section {"
+    "background: rgb(0, 255, 255);"
+    "border: 2px outset red;"
+"}")
+		self.summaryTableValuesWidget.verticalHeader().setStyleSheet(
+      
+            "QHeaderView::section{"
+            "border-bottom: 1px solid #4a4848;"
+            "background-color:rgb(0, 255, 255);"
+        "}")
 		with open('json.json', 'r') as f:
 			self.users = json.load(f)
 			self.user_dict=self.users["User"][self.user_id]
@@ -175,17 +191,12 @@ class MainMenuUI(QDialog):
 		painter.end()
   
 	def create_sendemail(self):
+		self.summaryTableValuesWidget.resize(579,1200)
 		self.print_widget()
-		# createhtmltable()
-		# print("*please wait, now trying to make pdf...\nthis may takes 2 to 3 minutes")
-		# make_pdf()
-		# print("*please wait, now trying to send email...\nthis may takes 1  minute ")
-		# send_email(self)
+
+		send_email(self)
 
 	def show_summary(self):
-		self.summaryTableValuesWidget.resize(600,1200)
-		self.summaryTableValuesWidget.setRowCount(0)
-		self.summaryTableValuesWidget.setRowCount(100)
 		project = self.showSummaryProjectCombo.currentText()
 		subject = self.showSummarySubjectCombo.currentText()
 		period = self.showSummaryPeriodCombo.currentText()
@@ -258,28 +269,6 @@ class MainMenuUI(QDialog):
 					else:
 						self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
 					row+=1
-		self.history_dict['User_id']=self.user_id
-		self.history_dict['User_name']=self.user_dict["userName"]
-		project_list=[]
-		subject_list=[]
-		if project=='All':
-			project_list.extend(self.user_dict["projects"].keys())
-			for i in self.user_dict["projects"].values():
-				for j in i.keys():
-					subject_list.append(j)
-		else:
-			project_list.append(project)
-			if subject=='All':
-				for i in self.user_dict["projects"][project].keys():
-					subject_list.append(i)
-			else:
-				subject_list.append(subject)
-		self.history_dict['project']=project_list
-		self.history_dict['subject']=subject_list
-		self.history_dict['Total_study_time']=self.total_time
-		self.history_dict['tasks']=dict2
-		with open('history.json', 'w') as f:
-			json.dump(self.history_dict, f)
 
 	def start_pomodoro(self):
 		project=self.combo_sellect_project.currentText()

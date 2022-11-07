@@ -15,9 +15,9 @@ def send_email(self):
 
 
 
-    with open('pomodoroSummary.pdf' , "rb") as pdf:
+    with open('history.pdf' , "rb") as pdf:
         pdfAttachment = MIMEApplication(pdf.read(),_subtype="pdf")
-        pdfAttachment.add_header('Content-Disposition','attachment',filename = ('utf-8', '', 'pomodoroSummary.pdf'))
+        pdfAttachment.add_header('Content-Disposition','attachment',filename = ('utf-8', '', 'history.pdf'))
 
         text = MIMEMultipart('alternative')
         text.attach(MIMEText("Some plain text", "plain", _charset="utf-8"))
