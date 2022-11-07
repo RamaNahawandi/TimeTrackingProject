@@ -1,6 +1,6 @@
 import time
 from datetime import datetime,timedelta,date
-from PyQt5 import QtWidgets,QtCore,QtGui
+from PyQt5 import QtWidgets,QtCore,QtGui,QtPrintSupport
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QTime, QTimer
@@ -138,7 +138,6 @@ class MainMenuUI(QDialog):
 		self.summaryTableValuesWidget.setColumnWidth(2,90)
 		self.summaryTableValuesWidget.setColumnWidth(3,90)
 		self.summaryTableValuesWidget.setColumnWidth(4,90)
-
 		with open('json.json', 'r') as f:
 			self.users = json.load(f)
 			self.user_dict=self.users["User"][self.user_id]
@@ -160,18 +159,31 @@ class MainMenuUI(QDialog):
 		self.sendEmailThisSummaryButton.clicked.connect(self.create_sendemail)
 		self.subject1={}
 		self.history_dict={}
-	
+  
+	def print_widget(self):
+		printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.HighResolution)
+		printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
+		printer.setOutputFileName('history.pdf')
+		painter = QtGui.QPainter(printer)
+		xscale = printer.pageRect().width() * 1.0 / self.summaryTableValuesWidget.width()
+		yscale = printer.pageRect().height() * 1.0 / self.summaryTableValuesWidget.height()
+		scale = min(xscale, yscale)
+		painter.translate(printer.paperRect().center())
+		painter.scale(scale, scale)
+		painter.translate(-self.summaryTableValuesWidget.width() / 2, -self.summaryTableValuesWidget.height() / 2)
+		self.summaryTableValuesWidget.render(painter)
+		painter.end()
+  
 	def create_sendemail(self):
-		createhtmltable()
-		print("*please wait, now trying to make pdf...\nthis may takes 2 to 3 minutes")
-		make_pdf()
-		print("*please wait, now trying to send email...\nthis may takes 1  minute ")
-		send_email(self)
-
-
-
+		self.print_widget()
+		# createhtmltable()
+		# print("*please wait, now trying to make pdf...\nthis may takes 2 to 3 minutes")
+		# make_pdf()
+		# print("*please wait, now trying to send email...\nthis may takes 1  minute ")
+		# send_email(self)
 
 	def show_summary(self):
+		self.summaryTableValuesWidget.resize(600,1200)
 		self.summaryTableValuesWidget.setRowCount(0)
 		self.summaryTableValuesWidget.setRowCount(100)
 		project = self.showSummaryProjectCombo.currentText()
@@ -274,51 +286,25 @@ class MainMenuUI(QDialog):
 		subject=self.combo_sellect_subject.currentText()
 		MainMenuUI.project=project
 		MainMenuUI.subject=subject
+		self.go_pomodoro()
+	
+	def load_json(self):
 		with open("json.json", "r+") as jsonFile:
 			data = json.load(jsonFile)   
 			data["User"][self.user_id]=self.user_dict
 			jsonFile.seek(0)  
 			json.dump(data, jsonFile)
 			jsonFile.truncate()
-		self.go_pomodoro()
   
 	def go_pomodoro(self):
 		main_menu = PomodoroUI()        
 		widget.addWidget(main_menu)
 		widget.setCurrentIndex(widget.currentIndex()+1)
 		   
-	def add_project(self):
-		project=self.addProjectInput.text()
-		if project in self.user_dict["projects"]:
-			self.errorTextProjectLabel.setStyleSheet("color: rgb(255, 0, 0);")
-			self.errorTextProjectLabel.setText('This project is already exist')
-		else:
-			self.errorTextProjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
-			self.errorTextProjectLabel.setText('This project is added')
-			self.user_dict["projects"][project]={}
-			self.projectDeleteCombo.addItem(project)    
-			self.sellectProjectComboSubjectMenu.addItem(project)    
-			self.combo_sellect_project.addItem(project)    
-			self.sellectProjectComboDeleteSubject.addItem(project)    
-			self.showSummaryProjectCombo.addItem(project)    
-
-	def add_subject(self):
-		project=self.sellectProjectComboSubjectMenu.currentText()
-		subject=self.addSubjectInput.text()
-		if subject in self.user_dict["projects"][project]:
-			self.errorTextSubjectLabel.setStyleSheet("color: rgb(255, 0, 0);")
-			self.errorTextSubjectLabel.setText('This subject is already exist')
-			
-		else:
-			self.user_dict["projects"][project][subject]={}
-			self.errorTextSubjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
-			self.errorTextSubjectLabel.setText('This subject is added')
-			   	
 	def show_subject_history(self):
 		content = self.showSummaryProjectCombo.currentText()
 		self.showSummarySubjectCombo.clear()
-		if len(content)>0:
-			
+		if len(content)>0:	
 			if content!="All":   
 				for i in self.user_dict["projects"][content].keys():
 					self.showSummarySubjectCombo.addItem(i)
@@ -332,8 +318,7 @@ class MainMenuUI(QDialog):
 		if len(content)>0:    
 			for i in self.user_dict["projects"][content].keys():
 				self.combo_sellect_subject.addItem(i)
-		
-		
+				
 	def show_subject(self):
 		content = self.sellectProjectComboDeleteSubject.currentText()
 		self.subjectDeleteCombo.clear()
@@ -356,7 +341,42 @@ class MainMenuUI(QDialog):
 		self.showSummaryPeriodCombo.addItem("All")
 		self.showSummaryPeriodCombo.addItem("Today")
 		self.showSummaryPeriodCombo.addItem("This week")
-			   
+
+	def add_project(self):
+		project=self.addProjectInput.text()
+		if project in self.user_dict["projects"]:
+			self.errorTextProjectLabel.setStyleSheet("color: rgb(255, 0, 0);")
+			self.errorTextProjectLabel.setText('This project is already exist')
+		else:
+			self.errorTextProjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
+			self.errorTextProjectLabel.setText('This project is added')
+			self.user_dict["projects"][project]={}
+			self.projectDeleteCombo.addItem(project)    
+			self.sellectProjectComboSubjectMenu.addItem(project)    
+			self.combo_sellect_project.addItem(project)    
+			self.sellectProjectComboDeleteSubject.addItem(project)    
+			self.showSummaryProjectCombo.addItem(project)
+			self.load_json()
+
+	def add_subject(self):
+		project=self.sellectProjectComboSubjectMenu.currentText()
+		subject=self.addSubjectInput.text()
+		if subject in self.user_dict["projects"][project]:
+			self.errorTextSubjectLabel.setStyleSheet("color: rgb(255, 0, 0);")
+			self.errorTextSubjectLabel.setText('This subject is already exist')
+			
+		else:
+			self.user_dict["projects"][project][subject]={}
+			self.errorTextSubjectLabel.setStyleSheet("color: rgb(0, 255, 0);")
+			self.errorTextSubjectLabel.setText('This subject is added')
+			if project==self.combo_sellect_project.currentText():
+				self.combo_sellect_subject.addItem(subject)
+			if project==self.sellectProjectComboDeleteSubject.currentText():
+				self.subjectDeleteCombo.addItem(subject)
+			if project==self.showSummaryProjectCombo.currentText():
+				self.showSummarySubjectCombo.addItem(subject)
+			self.load_json()
+			   			   
 	def add_reciept(self):         
 		self.email=self.addRecipientInput.text()
 		try:
@@ -364,13 +384,13 @@ class MainMenuUI(QDialog):
 			self.email = v["email"] 
 			if self.email in self.user_dict['Recipents']:
 				self.errorTextRecipientsEmailLabel.setStyleSheet("color: rgb(255, 0, 0);")
-				self.errorTextRecipientsEmailLabel.setText('This mail is already exist')
-				
+				self.errorTextRecipientsEmailLabel.setText('This mail is already exist')	
 			else:
 				self.errorTextRecipientsEmailLabel.setStyleSheet("color: rgb(0, 255, 0);")
 				self.errorTextRecipientsEmailLabel.setText('This mail is added')
 				self.user_dict['Recipents'].append(self.email)
-				self.deleteRecipientCombo.addItem(self.email)                                          
+				self.deleteRecipientCombo.addItem(self.email)
+				self.load_json()
 		except EmailNotValidError:
 			self.errorTextRecipientsEmailLabel.setStyleSheet("color: rgb(255, 0, 0);")
 			self.errorTextRecipientsEmailLabel.setText('Check email please, that is not a valid email')
@@ -380,6 +400,7 @@ class MainMenuUI(QDialog):
 		index = self.deleteRecipientCombo.findText(content)
 		self.user_dict['Recipents'].remove(content)
 		self.deleteRecipientCombo.removeItem(index)
+		self.load_json()
 		
 	def delete_project(self):
 		content = self.projectDeleteCombo.currentText()
@@ -391,6 +412,7 @@ class MainMenuUI(QDialog):
 		self.combo_sellect_project.removeItem(index)
 		index=self.showSummaryProjectCombo.findText(content)
 		self.showSummaryProjectCombo.removeItem(index)
+		self.load_json()
 		
 	def delete_subject(self):
 		content1 = self.sellectProjectComboDeleteSubject.currentText()
@@ -400,6 +422,7 @@ class MainMenuUI(QDialog):
 		self.subjectDeleteCombo.removeItem(index)
 		self.showSummarySubjectCombo.removeItem(index)
 		self.combo_sellect_subject.removeItem(index)
+		self.load_json()
 
 class ShortBreakUI(QDialog):
 	def __init__(self):
@@ -476,7 +499,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.taskComboEdit()
 		self.session_date=''
 		self.session_startTime=''	
-		self.count = 5
+		self.count = 1500
 		self.shadow_pomodoro_execute()
 		self.addTask.clicked.connect(self.addingTask)
 		self.pauseButton.pressed.connect(self.Pomodoropause)
@@ -499,8 +522,6 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.tableWidget.setColumnWidth(0,150)
 		self.tableWidget.setColumnWidth(1,70)
 		self.tableWidget.setLineWidth(70)
-		
-
 
 	def taskComboEdit(self):
 		list=[]
@@ -586,8 +607,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.taskComboEdit()
 
 	def done(self):		
-		self.flag = False
-		
+		self.flag = False	
 		with open("json.json", "r+") as jsonFile:
 				data = json.load(jsonFile)
 				self.task_input=self.tasksCombo.currentText()
@@ -653,7 +673,6 @@ class PomodoroUI(ShortBreakUI,QDialog):
 	def Pomodoropause(self):
 		self.flag = False
 
- 
 	def Pomodorostart(self):
 		self.flag = True
 		if len(self.session_startTime)==0:
@@ -671,7 +690,6 @@ class LongBreakUI(ShortBreakUI,QDialog):
 		self.skipButton.pressed.connect(self.skip)
 		self.startButton.pressed.connect(self.start)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-
 
 app = QApplication(sys.argv)
 UI = LoginUI() # This line determines which screen you will load at first

@@ -638,7 +638,7 @@ border-radius:10px;
     <property name="title">
      <string/>
     </property>
-    <widget class="QWidget" name="horizontalLayoutWidget_5">
+    <widget class="QWidget" name="horizontalWidget_5" native="true">
      <property name="geometry">
       <rect>
        <x>4</x>
@@ -960,7 +960,7 @@ border-radius:10px;</string>
           <property name="maximumSize">
            <size>
             <width>800</width>
-            <height>500</height>
+            <height>2400</height>
            </size>
           </property>
           <property name="font">

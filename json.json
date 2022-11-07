@@ -95,8 +95,8 @@
                                 "success": false
                             },
                             {
-                                "session_date": "",
-                                "session_startTime": "",
+                                "session_date": "2022-11-06",
+                                "session_startTime": "23:06",
                                 "session_endTime": "23:06",
                                 "study_time": "0:24:55",
                                 "success": true
@@ -180,108 +180,8 @@
         "sefa": {
             "userName": "sefa",
             "useremail": "sefa@gmail.com",
-            "Recipents": [
-                "sefa@gmail.com",
-                "rama_nahawandi@outlook.com"
-            ],
-            "projects": {
-                "a": {
-                    "b": {
-                        "1": [
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:37",
-                                "session_endTime": "21:37",
-                                "study_time": "0:24:55",
-                                "success": false
-                            },
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:38",
-                                "session_endTime": "21:38",
-                                "study_time": "0:24:57",
-                                "success": true
-                            }
-                        ],
-                        "2": [
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:38",
-                                "session_endTime": "21:38",
-                                "study_time": "0:00:00",
-                                "success": false
-                            },
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:38",
-                                "session_endTime": "21:38",
-                                "study_time": "0:24:55",
-                                "success": false
-                            },
-                            {
-                                "session_date": "",
-                                "session_startTime": "",
-                                "session_endTime": "23:19",
-                                "study_time": "0:24:55",
-                                "success": true
-                            }
-                        ],
-                        "3": [
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:38",
-                                "session_endTime": "21:38",
-                                "study_time": "00:09:58",
-                                "success": false
-                            }
-                        ],
-                        "new": [
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:53",
-                                "session_endTime": "21:53",
-                                "study_time": "0:24:55",
-                                "success": false
-                            },
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:54",
-                                "session_endTime": "21:54",
-                                "study_time": "0:24:55",
-                                "success": false
-                            },
-                            {
-                                "session_date": "",
-                                "session_startTime": "",
-                                "session_endTime": "23:19",
-                                "study_time": "0:00:00",
-                                "success": true
-                            }
-                        ],
-                        "old": [],
-                        "last": [
-                            {
-                                "session_date": "2022-11-06",
-                                "session_startTime": "21:55",
-                                "session_endTime": "21:55",
-                                "study_time": "0:24:55",
-                                "success": false
-                            },
-                            {
-                                "session_date": "",
-                                "session_startTime": "",
-                                "session_endTime": "23:19",
-                                "study_time": "0:00:00",
-                                "success": true
-                            }
-                        ],
-                        "": []
-                    },
-                    "c": {},
-                    "d": {}
-                },
-                "b": {}
-            }
+            "Recipents": [],
+            "projects": {}
         }
     }
 }

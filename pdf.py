@@ -7,7 +7,7 @@ def make_pdf():
     #Define path to HTML file
     path_to_file = 'htmlTable.html'
     #Point pdfkit configuration to wkhtmltopdf.exe
-    config = pdfkit.configuration(wkhtmltopdf=path_to_wkhtmltopdf)
+    config = pdfkit.configuration()
     #Convert HTML file to PDF
     pdfkit.from_file(path_to_file, output_path='pomodoroSummary.pdf', configuration=config)
 
