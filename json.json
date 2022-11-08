@@ -2,21 +2,22 @@
     "userEmails": [
         "rima@outlook.com",
         "rama@gmail.com",
-        "sefa@gmail.com"
+        "sefa@gmail.com",
+        "john@gmail.com"
     ],
     "userNames": {
         "rima": "$pbkdf2-sha256$50000$8D5njDHmPEeolXLuPefcuw$KbEX9jklNNCY9tw6aPljhTcsBb72pdas.XObb4V7Chk",
         "rama": "$pbkdf2-sha256$50000$gPD.P4dQqrUW4vwfI.R8zw$OxTibHKUU4DUhdysvGE/JVcgmVR18j4KNE2u2Yr2LWY",
-        "sefa": "$pbkdf2-sha256$50000$lBJCKKW0VooRYgwhpBRCSA$Sl5SzfV337o2j.mK0fIxe.bQLsXBtmmqbmHAQ09Iv4E"
+        "sefa": "$pbkdf2-sha256$50000$lBJCKKW0VooRYgwhpBRCSA$Sl5SzfV337o2j.mK0fIxe.bQLsXBtmmqbmHAQ09Iv4E",
+        "john": "$pbkdf2-sha256$50000$KGWMUQph7F2r9f6fsxYCgA$mhZJbtgpAtn5foYwNHSHUBPe.vbpGnw71nm5xtKejwc"
     },
     "User": {
         "rima": {
             "userName": "rima",
             "useremail": "rima@outlook.com",
             "Recipents": [
-                "rama_nahawandi@outlook.com",
-                "ramanahawandi@gmail.com",
-                "friend2@gmail.com"
+                "sefasahan35@gmail.com",
+                "sefa@gmail.com"
             ],
             "projects": {
                 "project1Math": {
@@ -33,7 +34,7 @@
                                 "study_time": "00:15:00",
                                 "session_startTime": "17:34",
                                 "session_endTime": "17:39",
-                                "session_date": "2022-11-06",
+                                "session_date": "2022-10-06",
                                 "success": true
                             }
                         ],
@@ -88,14 +89,14 @@
                                 "success": false
                             },
                             {
-                                "session_date": "2022-11-06",
+                                "session_date": "2022-11-07",
                                 "session_startTime": "23:06",
                                 "session_endTime": "23:06",
                                 "study_time": "0:24:55",
                                 "success": false
                             },
                             {
-                                "session_date": "2022-11-06",
+                                "session_date": "2022-11-07",
                                 "session_startTime": "23:06",
                                 "session_endTime": "23:06",
                                 "study_time": "0:24:55",
@@ -107,7 +108,7 @@
                                 "study_time": "00:20:00",
                                 "session_startTime": "17:24",
                                 "session_endTime": "17:54",
-                                "session_date": "2022-11-05",
+                                "session_date": "2022-11-07",
                                 "success": true
                             }
                         ],
@@ -122,18 +123,41 @@
                         ],
                         "fosoc": [
                             {
-                                "session_date": "2022-11-06",
+                                "session_date": "2022-10-06",
                                 "session_startTime": "21:20",
                                 "session_endTime": "21:20",
                                 "study_time": "0:24:59",
                                 "success": false
                             },
                             {
-                                "session_date": "2022-11-06",
+                                "session_date": "2022-11-07",
                                 "session_startTime": "21:21",
                                 "session_endTime": "21:21",
                                 "study_time": "0:24:55",
                                 "success": false
+                            },
+                            {
+                                "session_date": "2022-11-07",
+                                "session_startTime": "21:41",
+                                "session_endTime": "21:42",
+                                "study_time": "0:00:04",
+                                "success": false
+                            },
+                            {
+                                "session_date": "2022-11-07",
+                                "session_startTime": "21:41",
+                                "session_endTime": "21:42",
+                                "study_time": "0:00:05",
+                                "success": true
+                            }
+                        ],
+                        "sport": [
+                            {
+                                "session_date": "2022-11-07",
+                                "session_startTime": "21:41",
+                                "session_endTime": "21:41",
+                                "study_time": "0:00:17",
+                                "success": true
                             }
                         ]
                     },
@@ -147,11 +171,16 @@
                                 "study_time": "00:30:00",
                                 "session_startTime": "17:42",
                                 "session_endTime": "18:22",
-                                "session_date": "2022-11-06",
+                                "session_date": "2022-10-07",
                                 "success": true
                             }
                         ]
                     }
+                },
+                "universe": {
+                    "earth": {},
+                    "sun": {},
+                    "star": {}
                 }
             }
         },
@@ -182,6 +211,37 @@
             "useremail": "sefa@gmail.com",
             "Recipents": [],
             "projects": {}
+        },
+        "john": {
+            "userName": "john",
+            "useremail": "john@gmail.com",
+            "Recipents": [
+                "john@gmail.com",
+                "micheal@gmail.com"
+            ],
+            "projects": {
+                "universe": {
+                    "earth": {},
+                    "sun": {},
+                    "star": {},
+                    "galaxy": {
+                        "item": [
+                            {
+                                "session_date": "2022-11-07",
+                                "session_startTime": "14:38",
+                                "session_endTime": "14:38",
+                                "study_time": "0:00:11",
+                                "success": true
+                            }
+                        ],
+                        "subject": []
+                    }
+                },
+                "ocean": {
+                    "fish": {},
+                    "sea": {}
+                }
+            }
         }
     }
 }

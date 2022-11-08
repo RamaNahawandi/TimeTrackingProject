@@ -197,6 +197,8 @@ class MainMenuUI(QDialog):
 		send_email(self)
 
 	def show_summary(self):
+		self.summaryTableValuesWidget.setRowCount(0)
+		self.summaryTableValuesWidget.setRowCount(100)
 		project = self.showSummaryProjectCombo.currentText()
 		subject = self.showSummarySubjectCombo.currentText()
 		period = self.showSummaryPeriodCombo.currentText()
