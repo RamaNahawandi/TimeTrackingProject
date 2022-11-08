@@ -8,11 +8,8 @@ import sys
 import json
 from email_validator import validate_email, EmailNotValidError
 from passlib.context import CryptContext
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QDialog, QApplication
-
-
-
+# from PyQt5 import QtWidgets
+# from PyQt5.QtWidgets import QDialog, QApplication
 from emailwithPDF import send_email
 
 
@@ -490,7 +487,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.taskComboEdit()
 		self.session_date=''
 		self.session_startTime=''	
-		self.count = 1500
+		self.count = 5
 		self.shadow_pomodoro_execute()
 		self.addTask.clicked.connect(self.addingTask)
 		self.pauseButton.pressed.connect(self.Pomodoropause)

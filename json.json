@@ -17,7 +17,8 @@
             "useremail": "rima@outlook.com",
             "Recipents": [
                 "sefasahan35@gmail.com",
-                "sefa@gmail.com"
+                "sirthomasmore94@gmail.com",
+                "saffet.senih2015@gmail.com"
             ],
             "projects": {
                 "project1Math": {
@@ -157,6 +158,29 @@
                                 "session_startTime": "21:41",
                                 "session_endTime": "21:41",
                                 "study_time": "0:00:17",
+                                "success": true
+                            }
+                        ],
+                        "tas11": [
+                            {
+                                "session_date": "2022-11-08",
+                                "session_startTime": "12:15",
+                                "session_endTime": "12:15",
+                                "study_time": "0:24:55",
+                                "success": false
+                            },
+                            {
+                                "session_date": "2022-11-08",
+                                "session_startTime": "12:16",
+                                "session_endTime": "12:16",
+                                "study_time": "0:24:55",
+                                "success": false
+                            },
+                            {
+                                "session_date": "2022-11-08",
+                                "session_startTime": "12:16",
+                                "session_endTime": "12:18",
+                                "study_time": "0:24:58",
                                 "success": true
                             }
                         ]
