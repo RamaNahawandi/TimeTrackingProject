@@ -487,7 +487,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.taskComboEdit()
 		self.session_date=''
 		self.session_startTime=''	
-		self.count = 5
+		self.count = 1500
 		self.shadow_pomodoro_execute()
 		self.addTask.clicked.connect(self.addingTask)
 		self.pauseButton.pressed.connect(self.Pomodoropause)
