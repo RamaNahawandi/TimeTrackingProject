@@ -3,14 +3,13 @@ from datetime import datetime,timedelta,date
 from PyQt5 import QtWidgets,QtCore,QtGui,QtPrintSupport
 from PyQt5.QtWidgets import *
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import QTime, QTimer
+from PyQt5.QtCore import QTimer
 import sys
 import json
 from email_validator import validate_email, EmailNotValidError
 from passlib.context import CryptContext
-# from PyQt5 import QtWidgets
-# from PyQt5.QtWidgets import QDialog, QApplication
 from emailwithPDF import send_email
+import psycopg2
 
 
 
@@ -80,7 +79,7 @@ class LoginUI(QDialog):
 		self.user_id=self.nameInputSignUp.text()
 		self.user_password=self.signupPassword.text()
 		self.user_confirm_password=self.signupPasswordconfirm.text()
-		hashed_password=context.hash(self.user_confirm_password)
+		self.hashed_password=context.hash(self.user_confirm_password)
 		
 		if len(self.user_id)==0:
 			self.errorTextSignUp.setText('Please write your name')
@@ -98,24 +97,46 @@ class LoginUI(QDialog):
 					if len(self.user_password)==0:
 						self.errorTextSignUp.setText('Please assign a password')
 					else:  
-						if context.verify(self.user_password,hashed_password):                               
-							with open("json.json", "r+") as jsonFile:
-								data = json.load(jsonFile)   
-								data["userEmails"].append(self.user_email)
-								data["userNames"][self.user_id]=hashed_password
-								user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[self.user_email],"projects":{}}
-								data["User"][self.user_id]=user_dict
-								jsonFile.seek(0)  
-								json.dump(data, jsonFile)
-								jsonFile.truncate()
-							LoginUI.user_id=self.user_id                    
-							self.go_main_menu()
+						if context.verify(self.user_password,self.hashed_password):
+							self.database_load()
+							# with open("json.json", "r+") as jsonFile:
+							# 	data = json.load(jsonFile)   
+							# 	data["userEmails"].append(self.user_email)
+							# 	data["userNames"][self.user_id]=self.hashed_password
+							# 	user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[self.user_email],"projects":{}}
+							# 	data["User"][self.user_id]=user_dict
+							# 	jsonFile.seek(0)  
+							# 	json.dump(data, jsonFile)
+							# 	jsonFile.truncate()
+							# LoginUI.user_id=self.user_id                    
+							# self.go_main_menu()
 						else:
 							self.errorTextSignUp.setText('Check password please they do not match')
 															
 			except EmailNotValidError :
 				self.errorTextSignUp.setText('Check email please, that is not a valid email')
-					   
+	
+	def database_load(self):
+		try:
+			conn = psycopg2.connect(
+			host="localhost",
+			database="timetrack",
+			user="postgres",
+			password="postgres")
+			cur = conn.cursor()
+			postgres_insert_query = f""" INSERT INTO "user" (username,email,password) VALUES ('{self.user_id}','{self.user_email}','{self.hashed_password}')"""
+			cur.execute(postgres_insert_query)
+			cur.close()
+			conn.commit()
+		except (Exception, psycopg2.DatabaseError) as error:
+			print(error)
+		finally:
+			if conn is not None:
+				conn.close()
+
+
+
+ 				   
 	def go_main_menu(self):    
 		main_menu = MainMenuUI()
 		widget.addWidget(main_menu)
