@@ -1,7 +1,7 @@
 import time
 from datetime import datetime,timedelta,date
 from PyQt5 import QtWidgets,QtCore,QtGui,QtPrintSupport
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QDialog, QApplication, QGraphicsDropShadowEffect
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import QTimer
 import sys
@@ -97,45 +97,23 @@ class LoginUI(QDialog):
 					if len(self.user_password)==0:
 						self.errorTextSignUp.setText('Please assign a password')
 					else:  
-						if context.verify(self.user_password,self.hashed_password):
-							self.database_load()
-							# with open("json.json", "r+") as jsonFile:
-							# 	data = json.load(jsonFile)   
-							# 	data["userEmails"].append(self.user_email)
-							# 	data["userNames"][self.user_id]=self.hashed_password
-							# 	user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[self.user_email],"projects":{}}
-							# 	data["User"][self.user_id]=user_dict
-							# 	jsonFile.seek(0)  
-							# 	json.dump(data, jsonFile)
-							# 	jsonFile.truncate()
-							# LoginUI.user_id=self.user_id                    
-							# self.go_main_menu()
+						if context.verify(self.user_password,self.hashed_password):	
+							with open("json.json", "r+") as jsonFile:
+								data = json.load(jsonFile)   
+								data["userEmails"].append(self.user_email)
+								data["userNames"][self.user_id]=self.hashed_password
+								user_dict={"userName":self.user_id,"useremail":self.user_email,"Recipents":[self.user_email],"projects":{}}
+								data["User"][self.user_id]=user_dict
+								jsonFile.seek(0)  
+								json.dump(data, jsonFile)
+								jsonFile.truncate()
+							LoginUI.user_id=self.user_id                    
+							self.go_main_menu()
 						else:
 							self.errorTextSignUp.setText('Check password please they do not match')
 															
 			except EmailNotValidError :
 				self.errorTextSignUp.setText('Check email please, that is not a valid email')
-	
-	def database_load(self):
-		try:
-			conn = psycopg2.connect(
-			host="localhost",
-			database="timetrack",
-			user="postgres",
-			password="postgres")
-			cur = conn.cursor()
-			postgres_insert_query = f""" INSERT INTO "user" (username,email,password) VALUES ('{self.user_id}','{self.user_email}','{self.hashed_password}')"""
-			cur.execute(postgres_insert_query)
-			cur.close()
-			conn.commit()
-		except (Exception, psycopg2.DatabaseError) as error:
-			print(error)
-		finally:
-			if conn is not None:
-				conn.close()
-
-
-
  				   
 	def go_main_menu(self):    
 		main_menu = MainMenuUI()
@@ -151,6 +129,31 @@ class MainMenuUI(QDialog):
 		loadUi("./UI/mainMenu.ui",self)
 		widget.setWindowTitle(f'{LoginUI.user_id} Time Tracking App')
 		self.user_id=LoginUI.user_id
+
+		with open('json.json', 'r') as f:
+			self.users = json.load(f)
+			self.user_dict=self.users["User"][self.user_id]
+		self.widget_set()
+		self.addRecipientButton.clicked.connect(self.add_recipient)
+		self.deleteRecipientButton.clicked.connect(self.delete_reciept)
+		self.projectDeleteButton.clicked.connect(self.delete_project)
+		self.addProjectButton.clicked.connect(self.add_project)
+		self.addSubjectButton.clicked.connect(self.add_subject)
+		self.button_start_pomodoro.clicked.connect(self.start_pomodoro)
+		self.sellectProjectComboDeleteSubject.currentIndexChanged.connect(self.show_subject)
+		self.combo_sellect_project.currentIndexChanged.connect(self.show_subject_pomodoro)
+		self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
+		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
+		self.combo_set()
+		self.showSummaryButton.clicked.connect(self.show_summary)
+		self.sendEmailThisSummaryButton.clicked.connect(self.create_sendemail)
+		self.subject1={}
+		self.history_dict={}
+
+	def widget_set(self):
+		self.errorTextRecipientsEmailLabel.setText('')
+		self.errorTextProjectLabel.setText('')
+		self.errorTextSubjectLabel.setText('')
 		self.summaryTableValuesWidget.setColumnWidth(0,123)
 		self.summaryTableValuesWidget.setColumnWidth(1,150)
 		self.summaryTableValuesWidget.setColumnWidth(2,90)
@@ -172,27 +175,6 @@ class MainMenuUI(QDialog):
             "border-bottom: 1px solid #4a4848;"
             "background-color:rgb(0, 255, 255);"
         "}")
-		with open('json.json', 'r') as f:
-			self.users = json.load(f)
-			self.user_dict=self.users["User"][self.user_id]
-		self.errorTextRecipientsEmailLabel.setText('')
-		self.errorTextProjectLabel.setText('')
-		self.errorTextSubjectLabel.setText('')
-		self.addRecipientButton.clicked.connect(self.add_reciept)
-		self.deleteRecipientButton.clicked.connect(self.delete_reciept)
-		self.projectDeleteButton.clicked.connect(self.delete_project)
-		self.addProjectButton.clicked.connect(self.add_project)
-		self.addSubjectButton.clicked.connect(self.add_subject)
-		self.button_start_pomodoro.clicked.connect(self.start_pomodoro)
-		self.sellectProjectComboDeleteSubject.currentIndexChanged.connect(self.show_subject)
-		self.combo_sellect_project.currentIndexChanged.connect(self.show_subject_pomodoro)
-		self.showSummaryProjectCombo.currentIndexChanged.connect(self.show_subject_history)
-		self.subjectDeleteButton_2.clicked.connect(self.delete_subject)
-		self.combo_set()
-		self.showSummaryButton.clicked.connect(self.show_summary)
-		self.sendEmailThisSummaryButton.clicked.connect(self.create_sendemail)
-		self.subject1={}
-		self.history_dict={}
   
 	def print_widget(self):
 		printer = QtPrintSupport.QPrinter(QtPrintSupport.QPrinter.HighResolution)
@@ -211,7 +193,6 @@ class MainMenuUI(QDialog):
 	def create_sendemail(self):
 		self.summaryTableValuesWidget.resize(579,1200)
 		self.print_widget()
-
 		send_email(self)
 
 	def show_summary(self):
@@ -226,7 +207,7 @@ class MainMenuUI(QDialog):
 		week_ago=datetime.strptime(week, '%Y-%m-%d').date()
 		text="00:10"
 		self.total_time= datetime.strptime(text,"%M:%S")
-	
+		
 		dict={}
 		if project=='All':	
 			for i,j in self.user_dict["projects"].items():
@@ -290,13 +271,6 @@ class MainMenuUI(QDialog):
 						self.summaryTableValuesWidget.setItem(row,4,QtWidgets.QTableWidgetItem('False'))
 					row+=1
 
-	def start_pomodoro(self):
-		project=self.combo_sellect_project.currentText()
-		subject=self.combo_sellect_subject.currentText()
-		MainMenuUI.project=project
-		MainMenuUI.subject=subject
-		self.go_pomodoro()
-	
 	def load_json(self):
 		with open("json.json", "r+") as jsonFile:
 			data = json.load(jsonFile)   
@@ -304,12 +278,7 @@ class MainMenuUI(QDialog):
 			jsonFile.seek(0)  
 			json.dump(data, jsonFile)
 			jsonFile.truncate()
-  
-	def go_pomodoro(self):
-		main_menu = PomodoroUI()        
-		widget.addWidget(main_menu)
-		widget.setCurrentIndex(widget.currentIndex()+1)
-		   
+   
 	def show_subject_history(self):
 		content = self.showSummaryProjectCombo.currentText()
 		self.showSummarySubjectCombo.clear()
@@ -386,7 +355,7 @@ class MainMenuUI(QDialog):
 				self.showSummarySubjectCombo.addItem(subject)
 			self.load_json()
 			   			   
-	def add_reciept(self):         
+	def add_recipient(self):         
 		self.email=self.addRecipientInput.text()
 		try:
 			v = validate_email(self.email)
@@ -432,6 +401,18 @@ class MainMenuUI(QDialog):
 		self.showSummarySubjectCombo.removeItem(index)
 		self.combo_sellect_subject.removeItem(index)
 		self.load_json()
+	
+	def start_pomodoro(self):
+		project=self.combo_sellect_project.currentText()
+		subject=self.combo_sellect_subject.currentText()
+		MainMenuUI.project=project
+		MainMenuUI.subject=subject
+		self.go_pomodoro()
+	
+	def go_pomodoro(self):
+		main_menu = PomodoroUI()        
+		widget.addWidget(main_menu)
+		widget.setCurrentIndex(widget.currentIndex()+1)
 
 class ShortBreakUI(QDialog):
 	def __init__(self):
@@ -508,7 +489,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.taskComboEdit()
 		self.session_date=''
 		self.session_startTime=''	
-		self.count = 1500
+		self.count = 5
 		self.shadow_pomodoro_execute()
 		self.addTask.clicked.connect(self.addingTask)
 		self.pauseButton.pressed.connect(self.Pomodoropause)
@@ -516,7 +497,7 @@ class PomodoroUI(ShortBreakUI,QDialog):
 		self.doneButton.clicked.connect(self.done)
 		self.notFinishedButton.clicked.connect(self.notFinished)
 		self.goToMainMenuButton.clicked.connect(self.go_main_menu)
-		self.control_time=1500
+		self.control_time=5
 		self.numberOfSession.setText(str(PomodoroUI.session_number))
 		self.tableWidget.horizontalHeader().setStyleSheet(
             "QHeaderView::section{"
@@ -702,17 +683,6 @@ class LongBreakUI(ShortBreakUI,QDialog):
 
 app = QApplication(sys.argv)
 UI = LoginUI() # This line determines which screen you will load at first
-
-# You can also try one of other screens to see them.
-# UI = MainMenuUI()
-# UI = PomodoroUI()
-# UI = ShortBreakUI()
-# UI = LongBreakUI()
-# this block is for make a pup.up message   
-# self.messagebox=QtWidgets.QMessageBox()
-# self.messagebox.setText(f"Check your email adress or sign up please")
-# self.messagebox.setWindowTitle('log in problem')
-# self.messagebox.exec_()
 
 widget = QtWidgets.QStackedWidget()
 widget.addWidget(UI)
